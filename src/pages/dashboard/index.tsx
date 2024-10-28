@@ -503,7 +503,7 @@ export default function Dashboard({ orders }: DashboardProps) {
 export const getServerSideProps = canSSRAuth(async (ctx) => {
   const apiClient = setupAPIClient(ctx)
   const response = await apiClient.get<Order[]>('/orders')
-  console.log(response.data)
+
   return {
     props: {
       orders: response.data,
