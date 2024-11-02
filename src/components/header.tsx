@@ -32,8 +32,11 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
+import { AuthContext } from '@/contexts/AuthContext'
+import { useContext } from 'react'
 
 export function Header() {
+  const { user } = useContext(AuthContext)
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 dark:bg-zinc-800">
       <Sheet>
@@ -112,11 +115,10 @@ export function Header() {
         </Breadcrumb>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className="overflow-hidden rounded-full border "
-            >
+            <Button variant="outline" className="overflow-hidden gap-3">
+              <span className="hidden sm:inline text-semibold text-base">
+                {user?.name}
+              </span>
               <CircleUser className="h-5 w-5" />
               <span className="sr-only">Toggle user menu</span>
             </Button>
