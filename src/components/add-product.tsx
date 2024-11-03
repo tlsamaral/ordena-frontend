@@ -15,7 +15,14 @@ import { useToast } from '@/hooks/use-toast'
 import { api } from '@/services/apiClient'
 import type { Category } from '@/types/category'
 import type { Product } from '@/types/product'
-import { CheckCircle, PlusCircle, Upload } from 'lucide-react'
+import {
+  CheckCircle,
+  Package2,
+  PlusCircle,
+  Tag,
+  Trash,
+  Upload,
+} from 'lucide-react'
 import { type ChangeEvent, useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { SearchCategory } from './search-category'
@@ -142,40 +149,7 @@ export function AddProduct() {
           </div>
         </div>
         <Separator orientation="horizontal" />
-        <div className="grid grid-cols-4  gap-4">
-          <div className="col-span-1 flex flex-col justify-start gap-2">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="name">Escolha a imagem do produto</Label>
-              <span className="text-xs text-neutral-100/80">
-                Digite o nome deste produto
-              </span>
-            </div>
-          </div>
-          <div className="col-span-2">
-            <div className="flex justify-end items-center gap-4">
-              <label className="w-full h-32 rounded-lg overflow-hidden border relative flex justify-center items-center cursor-pointer hover:brightness-75 transition-all ">
-                <input
-                  type="file"
-                  accept="image/png, image/jpeg"
-                  className="hidden"
-                  onChange={handleFile}
-                />
-                {bannerUrl ? (
-                  <img
-                    src={bannerUrl}
-                    className="w-full h-full"
-                    alt="Foto do produto"
-                  />
-                ) : (
-                  <span>
-                    <Upload size={20} color="#fff" />
-                  </span>
-                )}
-              </label>
-            </div>
-          </div>
-        </div>
-        <Separator orientation="horizontal" />
+
         <div className="grid grid-cols-4 items-start gap-4">
           <div className="col-span-1 flex flex-col justify-start gap-2">
             <div className="flex flex-col gap-2">
@@ -195,6 +169,67 @@ export function AddProduct() {
               placeholder="Valor do produto..."
               required
             />
+          </div>
+        </div>
+        <Separator orientation="horizontal" />
+        <div className="grid grid-cols-4  gap-4">
+          <div className="col-span-1 flex flex-col justify-start gap-2">
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="name">Escolha a imagem do produto</Label>
+              <span className="text-xs text-neutral-100/80">
+                Digite o nome deste produto
+              </span>
+            </div>
+          </div>
+          <div className="col-span-2">
+            <div className="flex justify-end items-start gap-4">
+              <div>
+                <div className="w-16 h-16 mx-3 rounded-full overflow-hidden flex justify-center items-center border">
+                  {bannerUrl ? (
+                    <img
+                      src={bannerUrl}
+                      className="w-full h-full"
+                      alt="Foto do produto"
+                    />
+                  ) : (
+                    <Package2 size={14} />
+                  )}
+                </div>
+                {bannerUrl && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setBanner(null)
+                      setBannerUrl('')
+                    }}
+                    className="mx-auto my-3 rounded-full overflow-hidden flex justify-center items-center"
+                  >
+                    <Trash size={14} />
+                  </Button>
+                )}
+              </div>
+              <label className="w-full h-36 rounded-lg overflow-hidden border relative flex flex-col justify-center items-center cursor-pointer hover:brightness-75 transition-all gap-2">
+                <input
+                  type="file"
+                  className="hidden"
+                  onChange={handleFile}
+                  required
+                  accept="image/png, image/jpeg, image/svg"
+                />
+                <span className="p-3 rounded-full bg-zinc-900 border">
+                  <Upload size={16} color="#fff" />
+                </span>
+                <span className="text-zinc-100">
+                  <span className="text-red-400">Clique aqui</span> para
+                  adicionar uma imagem
+                </span>
+                <span className="text-xs text-neutral-400/80">
+                  SVG, PNG, JPG ou GIF (MAX. 400x400px)
+                </span>
+              </label>
+            </div>
           </div>
         </div>
         <Separator orientation="horizontal" />
@@ -241,7 +276,7 @@ export function AddProduct() {
           Cancelar
         </Button>
         <Button type="submit" size="sm">
-          Salvar <CheckCircle size={16} className="text-sm ml-3" />
+          Salvar <CheckCircle size={16} className="text-sm ml-1" />
         </Button>
       </div>
     </form>
