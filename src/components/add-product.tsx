@@ -153,9 +153,9 @@ export function AddProduct() {
         <div className="grid grid-cols-4 items-start gap-4">
           <div className="col-span-1 flex flex-col justify-start gap-2">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="price">Price</Label>
+              <Label htmlFor="price">Preço</Label>
               <span className="text-xs text-neutral-100/80">
-                Digite o nome deste produto
+                Defina aqui o preço deste produto
               </span>
             </div>
           </div>
@@ -177,7 +177,7 @@ export function AddProduct() {
             <div className="flex flex-col gap-2">
               <Label htmlFor="name">Escolha a imagem do produto</Label>
               <span className="text-xs text-neutral-100/80">
-                Digite o nome deste produto
+                Selecione a imagem de exibição deste produto
               </span>
             </div>
           </div>
@@ -238,7 +238,7 @@ export function AddProduct() {
             <div className="flex flex-col gap-2">
               <Label htmlFor="category_id">Categoria do produto</Label>
               <span className="text-xs text-neutral-100/80">
-                Digite o nome deste produto
+                É necessário selecionar uma categoria
               </span>
             </div>
           </div>
