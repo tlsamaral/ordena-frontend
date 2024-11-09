@@ -7,24 +7,57 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { setupAPIClient } from '@/services/api'
+import { initializeSocket } from '@/services/socket/socket'
 import type { Order } from '@/types/order'
 import { canSSRAuth } from '@/utils/canSSRAuth'
+import { useEffect, useRef, useState } from 'react'
 
 interface OrdersPageProps {
   orders: Order[]
 }
+
 export default function OrdersPage({ orders }: OrdersPageProps) {
+  const [realTimeOrders, setRealTimeOrders] = useState<Order[]>(orders)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+
+  useEffect(() => {
+    // Inicializa o áudio apenas no lado do cliente
+    audioRef.current = new Audio('/order-complete.mp3')
+
+    const socket = initializeSocket()
+
+    const handleOrderCompleted = (newOrder: Order) => {
+      setRealTimeOrders((prevOrders) => [...prevOrders, newOrder])
+
+      // Reproduz o som quando um novo pedido é recebido
+      if (audioRef.current) {
+        audioRef.current.play()
+      }
+    }
+
+    socket.on('connect', () => {
+      console.log('Connected to WebSocket server')
+    })
+
+    socket.on('orderCompleted', handleOrderCompleted)
+
+    return () => {
+      socket.off('orderCompleted', handleOrderCompleted)
+      console.log('Disconnected from WebSocket server')
+    }
+  }, [])
+
   return (
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
       <Card x-chunk="dashboard-06-chunk-0">
         <CardHeader>
           <CardTitle>Novo pedido</CardTitle>
           <CardDescription>
-            Nesta seção voce pode adicionar um pedido
+            Nesta seção você pode adicionar um pedido
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <OrdersTable orders={orders} />
+          <OrdersTable orders={realTimeOrders} />
         </CardContent>
       </Card>
     </main>
