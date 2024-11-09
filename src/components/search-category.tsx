@@ -21,35 +21,13 @@ import { api } from '@/services/apiClient'
 import type { Category } from '@/types/category'
 import { Check, ChevronsUpDown, SendToBack } from 'lucide-react'
 
-const frameworks = [
-  {
-    value: 'next.js',
-    label: 'Next.js',
-  },
-  {
-    value: 'sveltekit',
-    label: 'SvelteKit',
-  },
-  {
-    value: 'nuxt.js',
-    label: 'Nuxt.js',
-  },
-  {
-    value: 'remix',
-    label: 'Remix',
-  },
-  {
-    value: 'astro',
-    label: 'Astro',
-  },
-]
-
 interface SearchCategoryProps {
   className?: string
   categories: Category[]
   onCategoryChange: (category: Category) => void
   categoryIdSelected: string
-  setCategories: React.Dispatch<React.SetStateAction<Category[]>>
+  setCategories?: React.Dispatch<React.SetStateAction<Category[]>>
+  isRegister?: boolean
 }
 
 export function SearchCategory({
@@ -58,17 +36,19 @@ export function SearchCategory({
   onCategoryChange,
   categoryIdSelected,
   setCategories,
+  isRegister = true,
 }: SearchCategoryProps) {
   const [open, setOpen] = React.useState(false)
   const [searchValue, setSearchValue] = React.useState('')
 
   const createNewCategory = async (label: string) => {
-    console.log(label)
     try {
       const response = await api.post<Category>('/category', {
         name: searchValue,
       })
-      setCategories([...categories, response.data])
+      if (setCategories) {
+        setCategories([...categories, response.data])
+      }
       onCategoryChange(response.data)
     } catch (err) {}
   }
@@ -98,7 +78,7 @@ export function SearchCategory({
             value={searchValue}
           />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>Nenhuma categoria encontrada.</CommandEmpty>
             <CommandGroup>
               {categories.map((category) => (
                 <CommandItem
@@ -121,7 +101,7 @@ export function SearchCategory({
                   />
                 </CommandItem>
               ))}
-              {searchValue.length > 0 && (
+              {searchValue.length > 0 && isRegister && (
                 <CommandItem
                   className="cursor-pointer"
                   onSelect={createNewCategory}
