@@ -1,12 +1,15 @@
 export interface Order {
   id: string
-  table: number
+  table_id: string
   status: boolean
   draft: boolean
   name: string | null
   created_at: Date | null
   updated_at: Date | null
   items: Item[]
+  table: {
+    name: string
+  }
 }
 
 export interface Item {
