@@ -23,6 +23,7 @@ import {
   Trash,
   Upload,
 } from 'lucide-react'
+import Link from 'next/link'
 import { type ChangeEvent, useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { SearchCategory } from './search-category'
@@ -38,6 +39,7 @@ export function AddProduct() {
   const [imageBanner, setBanner] = useState<File | null>(null)
   const [categoryId, setCategoryId] = useState('')
   const [categories, setCategories] = useState<Category[]>([])
+  const [isLoading, setIsLoading] = useState(false)
   const { setProducts } = useContext(GlobalContext)
 
   useEffect(() => {
@@ -87,6 +89,7 @@ export function AddProduct() {
     formData.append('file', imageBanner)
 
     try {
+      setIsLoading(true)
       const response = await api.post<Product>('/product', formData)
       setProducts((prev) => [...prev, { ...response.data }])
 
@@ -109,6 +112,8 @@ export function AddProduct() {
           </ToastAction>
         ),
       })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -146,7 +151,7 @@ export function AddProduct() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="col-span-3"
-              placeholder="Product name"
+              placeholder="Nome do produto.."
               required
             />
           </div>
@@ -275,10 +280,16 @@ export function AddProduct() {
         <Separator orientation="horizontal" />
       </div>
       <div className="flex justify-end gap-4">
-        <Button size="sm" variant="secondary">
-          Cancelar
+        <Button
+          type="button"
+          size="sm"
+          variant="secondary"
+          disabled={isLoading}
+          asChild
+        >
+          <Link href="/products">Cancelar</Link>
         </Button>
-        <Button type="submit" size="sm">
+        <Button type="submit" size="sm" disabled={isLoading}>
           Salvar <CheckCircle size={16} className="text-sm ml-1" />
         </Button>
       </div>
