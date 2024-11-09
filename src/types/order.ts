@@ -47,3 +47,10 @@ export interface OrderById {
   updated_at: string
   table: Table
 }
+
+export interface ProductOrder {
+  id: string
+  name: string
+  price: number
+  amount: number
+}
