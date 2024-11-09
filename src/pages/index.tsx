@@ -37,7 +37,7 @@ export default function Login() {
 
   return (
     <div className="w-full h-screen lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-      <div className="flex items-center justify-center py-12">
+      <div className="flex items-center justify-center py-12 bg-gradient-to-l dark:from-zinc-900 dark:to-zinc-950 from-zinc-50 to-zinc-200">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
             <h1 className="text-3xl font-bold">Acessar</h1>
@@ -67,7 +67,7 @@ export default function Login() {
               </div>
               <Input id="password" type="password" {...register('password')} />
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" variant="destructive">
               Login
             </Button>
           </form>
@@ -75,11 +75,11 @@ export default function Login() {
       </div>
       <div className="hidden bg-muted lg:block">
         <Image
-          src="/placeholder.svg"
+          src="/image-darker.webp"
           alt="Image"
           width="1920"
           height="1080"
-          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          className="h-full w-full object-cover dark:brightness-[0.4] dark:grayscale"
         />
       </div>
     </div>
