@@ -94,7 +94,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       Router.push('/dashboard')
     } catch (err) {
       //   toast.error('Erro ao logar')
-      console.log(err)
+      // biome-ignore lint/complexity/noUselessCatch: <explanation>
+      throw err
     }
   }
 
