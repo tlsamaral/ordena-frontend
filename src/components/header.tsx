@@ -115,7 +115,7 @@ export function Header() {
         </Breadcrumb>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="overflow-hidden gap-3">
+            <Button variant="ghost" className="overflow-hidden gap-3">
               <span className="hidden sm:inline text-semibold text-base">
                 {user?.name}
               </span>
