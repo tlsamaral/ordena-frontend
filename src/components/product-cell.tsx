@@ -56,7 +56,10 @@ export default function ProductCell({
       <section className="flex flex-row items-center gap-2">
         <div className="h-12 w-1h-12 rounded-full border overflow-hidden">
           <img
-            src={products.find((p) => p.id === product.id)?.banner || ''}
+            src={
+              products.find((p) => p.id === product.id)?.banner ||
+              '/product-base.webp'
+            }
             alt={product.name}
             className="h-full w-full"
           />
