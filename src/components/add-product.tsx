@@ -92,7 +92,11 @@ export function AddProduct() {
 
       toast('Produto cadastrado com sucesso!', {
         description: `O produto "${response.data.name}" foi adicionado.`,
-        action: <ToastAction altText="Desfazer ação">Desfazer</ToastAction>,
+        action: (
+          <ToastAction className="ml-auto" altText="Desfazer ação">
+            Desfazer
+          </ToastAction>
+        ),
       })
     } catch (error) {
       console.error('Erro ao cadastrar o produto:', error)
@@ -100,7 +104,9 @@ export function AddProduct() {
         description:
           'Ocorreu um erro ao tentar cadastrar o produto. Tente novamente.',
         action: (
-          <ToastAction altText="Tentar novamente">Tentar novamente</ToastAction>
+          <ToastAction className="ml-auto" altText="Tentar novamente">
+            Tentar novamente
+          </ToastAction>
         ),
       })
     }
@@ -114,11 +120,8 @@ export function AddProduct() {
     if (!image) {
       return
     }
-
-    if (image.type === 'image/jpeg' || image.type === 'image/png') {
-      setBanner(image)
-      setBannerUrl(URL.createObjectURL(image))
-    }
+    setBanner(image)
+    setBannerUrl(URL.createObjectURL(image))
   }
 
   const categoryChange = (category: Category) => {
@@ -216,7 +219,7 @@ export function AddProduct() {
                   className="hidden"
                   onChange={handleFile}
                   required
-                  accept="image/png, image/jpeg, image/svg"
+                  accept="image/png, image/jpeg, image/svg, image/webp, image/gif"
                 />
                 <span className="p-3 rounded-full bg-zinc-900 border">
                   <Upload size={16} color="#fff" />
@@ -226,7 +229,7 @@ export function AddProduct() {
                   adicionar uma imagem
                 </span>
                 <span className="text-xs text-neutral-400/80">
-                  SVG, PNG, JPG ou GIF (MAX. 400x400px)
+                  SVG, PNG, JPG, WEBP ou GIF (MAX. 400x400px)
                 </span>
               </label>
             </div>
