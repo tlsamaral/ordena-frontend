@@ -13,15 +13,16 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { setupAPIClient } from '@/services/api'
+import { api } from '@/services/apiClient'
 import type { Categories, Category } from '@/types/category'
 import type { OrderById, ProductOrder } from '@/types/order'
 import type { Product, ProductList } from '@/types/product'
 import { canSSRAuth } from '@/utils/canSSRAuth'
-import { formatCurrency, formatValueToMoney } from '@/utils/formatCurrency'
 import { formatDistance } from '@/utils/formatDistanceToNow'
 import { Send } from 'lucide-react'
 import { notFound } from 'next/navigation'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 interface NewOrderPageProps {
   orderDetails: OrderById | null
@@ -36,6 +37,7 @@ export default function NewOrderPage({
 }: NewOrderPageProps) {
   const [categorySelected, setCategorySelected] = useState('')
   const [productsList, setProductsList] = useState<ProductOrder[]>([])
+  const [isLoading, setIsLoading] = useState(false)
 
   if (orderDetails === null) {
     return notFound()
@@ -61,6 +63,26 @@ export default function NewOrderPage({
     setProductsList((prev) =>
       prev.filter((product) => product.id !== product_id),
     )
+  }
+
+  const sendOrder = async () => {
+    try {
+      setIsLoading(true)
+      await api.put('/order/send-full', {
+        order_id: orderDetails.id,
+        products: productsList,
+      })
+
+      setProductsList([])
+      setCategorySelected('')
+      toast('Pedido enviado com sucesso', {
+        description: 'O pedido foi enviado com sucesso para a cozinha.',
+      })
+    } catch (error) {
+      toast('Erro ao enviar pedido')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   let productsListed = products
@@ -207,8 +229,22 @@ export default function NewOrderPage({
               <Button type="button" size="sm" variant="destructive">
                 Cancelar
               </Button>
-              <Button type="button" size="sm">
-                Enviar pedido <Send size={16} className="text-sm ml-1" />
+              <Button
+                type="button"
+                size="sm"
+                onClick={sendOrder}
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    Enviando pedido...{' '}
+                    <Send size={16} className="text-sm ml-1 animate-bounce" />
+                  </>
+                ) : (
+                  <>
+                    Enviar pedido <Send size={16} className="text-sm ml-1" />
+                  </>
+                )}
               </Button>
             </div>
           </div>
