@@ -70,9 +70,10 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'table',
     header: 'Número',
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue('table')}</div>
-    ),
+    cell: ({ row }) => {
+      const tableName = row.original.table.name
+      return <div className="capitalize">{tableName}</div>
+    },
   },
   {
     accessorKey: 'name',
@@ -83,7 +84,7 @@ export const columns: ColumnDef<Order>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           className="px-1"
         >
-          Nome da mesa
+          Nome
           <ChevronsUpDown className="ml-2 h-4 w-4 " />
         </Button>
       )
