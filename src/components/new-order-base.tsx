@@ -77,12 +77,8 @@ export default function NewOrderBase() {
         table_name: response.data.table.name,
       }
 
-      const query = {
-        dataOrder: encodeURIComponent(JSON.stringify(data)),
-      }
       router.push({
-        pathname: '/orders/new',
-        query: query,
+        pathname: `/orders/new/${data.id}`,
       })
     } catch (error) {
       console.error(error)
