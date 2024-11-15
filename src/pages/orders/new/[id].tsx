@@ -21,6 +21,7 @@ import { canSSRAuth } from '@/utils/canSSRAuth'
 import { formatDistance } from '@/utils/formatDistanceToNow'
 import { Send } from 'lucide-react'
 import { notFound } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
@@ -38,6 +39,7 @@ export default function NewOrderPage({
   const [categorySelected, setCategorySelected] = useState('')
   const [productsList, setProductsList] = useState<ProductOrder[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
   if (orderDetails === null) {
     return notFound()
@@ -78,6 +80,7 @@ export default function NewOrderPage({
       toast('Pedido enviado com sucesso', {
         description: 'O pedido foi enviado com sucesso para a cozinha.',
       })
+      router.push('/orders')
     } catch (error) {
       toast('Erro ao enviar pedido')
     } finally {
