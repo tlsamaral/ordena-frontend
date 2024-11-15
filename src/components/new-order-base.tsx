@@ -28,7 +28,7 @@ import { Input } from './ui/input'
 import { Label } from './ui/label'
 
 const NewOrderSchema = z.object({
-  name: z.string().min(3, 'Nome deve ter no mínimo 3 caracteres'),
+  name: z.string().min(3, 'Nome deve ter no mínimo 3 caracteres'),
   table_id: z.string().uuid('É necessário selecionar uma mesa'),
 })
 
@@ -38,6 +38,7 @@ export default function NewOrderBase() {
   const [orderName, setOrderName] = useState('')
   const [orderTable, setOrderTable] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   useEffect(() => {
     const getData = async () => {
@@ -50,6 +51,13 @@ export default function NewOrderBase() {
     }
     getData()
   }, [])
+
+  // Abrir modal ao detectar parâmetro `new_order_base` na URL
+  useEffect(() => {
+    if (router.query.new_order_base === 'true') {
+      setIsDialogOpen(true)
+    }
+  }, [router.query])
 
   const handleNewOrder = async () => {
     try {
@@ -87,10 +95,23 @@ export default function NewOrderBase() {
     }
   }
 
+  const handleOpenDialog = () => {
+    setIsDialogOpen(true)
+    router.push('?new_order_base=true', undefined, { shallow: true })
+  }
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false)
+    router.push(router.pathname, undefined, { shallow: true })
+  }
+
   return (
-    <Dialog>
+    <Dialog
+      open={isDialogOpen}
+      onOpenChange={(open) => (open ? handleOpenDialog() : handleCloseDialog())}
+    >
       <DialogTrigger asChild>
-        <Button>Novo Pedido</Button>
+        <Button onClick={handleOpenDialog}>Novo Pedido</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
