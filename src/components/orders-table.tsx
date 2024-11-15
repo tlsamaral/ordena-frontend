@@ -32,6 +32,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { api } from '@/services/apiClient'
 import type { Order } from '@/types/order'
 import { formatDistance } from '@/utils/formatDistanceToNow'
 import {
@@ -151,6 +152,15 @@ export const columns: ColumnDef<Order>[] = [
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
+      const finishOrder = async () => {
+        try {
+          await api.put('/order/finish', {
+            order_id: row.original.id,
+          })
+        } catch (error) {
+          console.error(error)
+        }
+      }
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -160,7 +170,16 @@ export const columns: ColumnDef<Order>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Ações</DropdownMenuLabel>
+            <DropdownMenuItem>
+              <Button
+                className="h-7 w-full "
+                variant="link"
+                onClick={finishOrder}
+              >
+                Finalizar pedido
+              </Button>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Button className="h-7 w-full " variant="destructive">
