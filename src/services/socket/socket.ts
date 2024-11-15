@@ -1,4 +1,5 @@
 // src/socket.ts
+import { getUserIdFromToken } from '@/utils/getUserIdByToken'
 import { type Socket, io } from 'socket.io-client'
 
 const SOCKET_URL = process.env.NEXT_PUBLIC_BASE_URL as string
@@ -6,10 +7,18 @@ const SOCKET_URL = process.env.NEXT_PUBLIC_BASE_URL as string
 let socket: Socket
 
 export const initializeSocket = (): Socket => {
-  if (!socket) {
-    socket = io(SOCKET_URL)
-    console.log('Socket.IO client initialized')
-  }
+  const userId = getUserIdFromToken()
+  const socket = io('http://localhost:3333', {
+    auth: { userId: userId },
+  })
+
+  socket.on('connect', () => {
+    console.log('Connected with WS Server')
+  })
+
+  socket.on('connect_error', (err) => {
+    console.error('Error on connection:', err)
+  })
   return socket
 }
 
