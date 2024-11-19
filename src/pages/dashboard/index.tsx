@@ -6,17 +6,9 @@ import {
   Copy,
   CreditCard,
   File,
-  Home,
-  LineChart,
   ListFilter,
   MoreVertical,
-  Package,
-  Package2,
-  PanelLeft,
-  Search,
-  ShoppingCart,
   Truck,
-  Users2,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -45,9 +37,6 @@ import {
 } from '@/components/ui/pagination'
 import { Progress } from '@/components/ui/progress'
 import { Separator } from '@/components/ui/separator'
-
-import { Header } from '@/components/header'
-import { Layout } from '@/components/layout'
 import {
   Table,
   TableBody,
@@ -60,6 +49,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { setupAPIClient } from '@/services/api'
 import type { Order } from '@/types/order'
 import { canSSRAuth } from '@/utils/canSSRAuth'
+import Link from 'next/link'
 
 export const description =
   'An orders dashboard with a sidebar navigation. The sidebar has icon navigation. The content area has a breadcrumb and search in the header. The main area has a list of recent orders with a filter and export button. The main area also has a detailed view of a single order with order details, shipping information, billing information, customer information, and payment information.'
@@ -75,14 +65,18 @@ export default function Dashboard({ orders }: DashboardProps) {
         <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
           <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
             <CardHeader className="pb-3">
-              <CardTitle>Your Orders</CardTitle>
+              <CardTitle>Seus pedidos</CardTitle>
               <CardDescription className="max-w-lg text-balance leading-relaxed">
-                Introducing Our Dynamic Orders Dashboard for Seamless Management
-                and Insightful Analysis.
+                Explore o Nosso Painel Dinâmico de Pedidos para Gerenciar com
+                Facilidade e Obter Insights Valiosos.
               </CardDescription>
             </CardHeader>
             <CardFooter>
-              <Button>Create New Order</Button>
+              <Button asChild>
+                <Link href="/orders?new_order_base=true">
+                  Criar novo pedido
+                </Link>
+              </Button>
             </CardFooter>
           </Card>
           <Card x-chunk="dashboard-05-chunk-1">

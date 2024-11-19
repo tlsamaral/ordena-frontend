@@ -180,6 +180,16 @@ export const columns: ColumnDef<Order>[] = [
           console.error(error)
         }
       }
+
+      const processOrder = async () => {
+        try {
+          await api.put('/order/process', {
+            order_id: row.original.id,
+          })
+        } catch (error) {
+          console.error(error)
+        }
+      }
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -190,18 +200,28 @@ export const columns: ColumnDef<Order>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <DropdownMenuItem>
+            <DropdownMenuItem asChild>
               <Button
-                className="h-7 w-full "
-                variant="link"
+                className="h-7 w-full"
+                variant="ghost"
+                onClick={processOrder}
+              >
+                Preparar Pedido
+              </Button>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Button
+                className="h-7 w-full"
+                variant="ghost"
                 onClick={finishOrder}
               >
                 Finalizar pedido
               </Button>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Button className="h-7 w-full " variant="destructive">
+            <DropdownMenuItem asChild>
+              <Button className="h-7 w-full hover:text-red-500" variant="ghost">
                 Cancelar pedido
               </Button>
             </DropdownMenuItem>

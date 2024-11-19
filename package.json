@@ -38,6 +38,7 @@
     "cmdk": "^1.0.0",
     "dayjs": "^1.11.13",
     "input-otp": "^1.2.4",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.446.0",
     "next": "^15.0.1",
     "next-themes": "^0.3.0",

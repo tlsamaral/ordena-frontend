@@ -27,12 +27,37 @@ export default function OrdersPage({ orders }: OrdersPageProps) {
     const socket = initializeSocket()
 
     const handleOrderCompleted = (newOrder: Order) => {
-      setRealTimeOrders((prevOrders) => [...prevOrders, newOrder])
+      setRealTimeOrders((prevOrders) => [newOrder, ...prevOrders])
 
-      // Reproduz o som quando um novo pedido é recebido
       if (audioRef.current) {
         audioRef.current.play()
       }
+    }
+
+    const updateOrder = (order: Order) => {
+      setRealTimeOrders((prevOrders) => {
+        const orderExists = prevOrders.some(
+          (prevOrder) => prevOrder.id === order.id,
+        )
+
+        if (orderExists) {
+          return prevOrders.map((prevOrder) =>
+            prevOrder.id === order.id ? order : prevOrder,
+          )
+        }
+
+        return [...prevOrders, order]
+      })
+
+      if (audioRef.current) {
+        audioRef.current.play()
+      }
+    }
+
+    function removeOrderByList(order: Order) {
+      setRealTimeOrders((prevOrders) =>
+        prevOrders.filter((prevOrder) => prevOrder.id !== order.id),
+      )
     }
 
     socket.on('connect', () => {
@@ -41,8 +66,14 @@ export default function OrdersPage({ orders }: OrdersPageProps) {
 
     socket.on('orderCompleted', handleOrderCompleted)
 
+    socket.on('order:process', updateOrder)
+
+    socket.on('order:end', removeOrderByList)
+
     return () => {
       socket.off('orderCompleted', handleOrderCompleted)
+      socket.off('order:process', updateOrder)
+      socket.off('order:end', removeOrderByList)
       console.log('Disconnected from WebSocket server')
     }
   }, [])

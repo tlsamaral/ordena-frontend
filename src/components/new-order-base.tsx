@@ -19,6 +19,7 @@ import { getAllTables } from '@/data/get-tables'
 import { api } from '@/services/apiClient'
 import type { OrderResponse } from '@/types/order'
 import type { TableList } from '@/types/table'
+import { formatPhoneNumber } from '@/utils/formaPhoneNumber'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -36,6 +37,7 @@ export default function NewOrderBase() {
   const router = useRouter()
   const [tables, setTables] = useState<TableList>([])
   const [orderName, setOrderName] = useState('')
+  const [orderPhone, setOrderPhone] = useState('')
   const [orderTable, setOrderTable] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -59,6 +61,11 @@ export default function NewOrderBase() {
     }
   }, [router.query])
 
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedPhone = formatPhoneNumber(e.target.value)
+    setOrderPhone(formattedPhone)
+  }
+
   const handleNewOrder = async () => {
     try {
       const validated = NewOrderSchema.safeParse({
@@ -77,6 +84,7 @@ export default function NewOrderBase() {
       const response = await api.post<OrderResponse>('/order', {
         name: orderName,
         table_id: orderTable,
+        phone: orderPhone.replace(/\D/g, ''),
       })
 
       const data = {
@@ -125,9 +133,18 @@ export default function NewOrderBase() {
             <Label>Nome</Label>
             <Input
               type="text"
-              placeholder="Digite o nome"
+              placeholder="Digite o nome.."
               value={orderName}
               onChange={(e) => setOrderName(e.target.value)}
+            />
+          </div>
+          <div>
+            <Label>Nome</Label>
+            <Input
+              type="text"
+              placeholder="Digite o telefone.."
+              value={orderPhone}
+              onChange={handlePhoneChange}
             />
           </div>
           <div>

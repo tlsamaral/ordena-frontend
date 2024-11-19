@@ -1,3 +1,4 @@
+import { FinishOrder } from '@/components/finish-order'
 import { Layout } from '@/components/layout'
 import { Toaster } from '@/components/ui/sonner'
 import { AuthProvider } from '@/contexts/AuthContext'
@@ -18,6 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <GlobalProvider>
           <Layout>
             <Toaster />
+            <FinishOrder />
             <Component {...pageProps} />
           </Layout>
         </GlobalProvider>

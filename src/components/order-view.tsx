@@ -7,6 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { api } from '@/services/apiClient'
 import type { Order, OrderTypes } from '@/types/order'
 import { Button } from './ui/button'
 
@@ -16,14 +17,6 @@ interface OrderViewProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 export function OrderView({ order, open, setOpen }: OrderViewProps) {
-  function handleStatusChange(status: OrderTypes) {
-    if (status === 'P') {
-      console.log('Processando', order.id)
-    } else if (status === 'A') {
-      console.log('Aberto', status)
-    }
-  }
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[625px]">
@@ -51,12 +44,6 @@ export function OrderView({ order, open, setOpen }: OrderViewProps) {
             </div>
           ))}
         </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>
-            Fechar
-          </Button>
-          <Button>Finalizar pedido</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   )
