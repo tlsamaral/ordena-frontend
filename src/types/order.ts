@@ -1,7 +1,9 @@
+export type OrderTypes = 'A' | 'C' | 'F' | 'P'
 export interface Order {
   id: string
   table_id: string
-  status: boolean
+  status: OrderTypes
+  phone: string | null
   draft: boolean
   name: string | null
   created_at: Date | null
@@ -13,7 +15,7 @@ export interface Order {
 }
 
 export interface Item {
-  amout: number
+  amount: number
   created_at: Date | null
   id: string
   order_id: string
