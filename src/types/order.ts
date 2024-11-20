@@ -27,6 +27,7 @@ export interface Item {
 export interface ProductInfo {
   name: string
   banner: string
+  price: string
 }
 
 export interface OrderResponse {
