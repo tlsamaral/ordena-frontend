@@ -40,7 +40,7 @@ export default function Login() {
 
 	return (
 		<div className="w-full h-screen lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] sm:overflow-hidden">
-			<div className="flex items-center justify-center py-12 bg-gradient-to-l dark:from-zinc-900 dark:to-zinc-950 from-zinc-50 to-zinc-200">
+			<div className="h-full flex items-center justify-center py-12 bg-gradient-to-l dark:from-zinc-900 dark:to-zinc-950 from-zinc-50 to-zinc-200">
 				<div className="mx-auto grid gap-6">
 					<div className="grid gap-2 text-center">
 						<h1 className="text-3xl font-bold">Acessar</h1>
