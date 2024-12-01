@@ -48,14 +48,14 @@ export function AddTable() {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button size="sm" className="h-7 gap-1">
+				<Button size="sm" className="h-8 gap-1">
 					<PlusCircle className="h-3.5 w-3.5" />
 					<span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
 						Adicionar Mesa
 					</span>
 				</Button>
 			</DialogTrigger>
-			<DialogContent className="sm:max-w-[500px] bg-zinc-900">
+			<DialogContent className="max-w-[350px] sm:max-w-[500px]">
 				<DialogHeader>
 					<DialogTitle>Adicionar mesa</DialogTitle>
 					<DialogDescription>

@@ -2,19 +2,19 @@ import { File, ListFilter } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
 } from '@/components/ui/card'
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+	DropdownMenu,
+	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
 import { CategoriesTable } from '@/components/categories-table'
@@ -28,67 +28,67 @@ import { canSSRAuth } from '@/utils/canSSRAuth'
 import { useContext, useEffect, useState } from 'react'
 
 export default function Products() {
-  const { products, setProducts, setCategories, categories } =
-    useContext(GlobalContext)
-  const [addProduct, setAddProduct] = useState(false)
+	const { products, setProducts, setCategories, categories } =
+		useContext(GlobalContext)
+	const [addProduct, setAddProduct] = useState(false)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const response = await api.get<ProductList>('/product/all')
-        setProducts(response.data)
-        const categories = await api.get<Categories>('/category')
-        setCategories(categories.data)
-      } catch {
-        console.error('Error fetching products')
-      }
-    }
-    getProducts()
-  }, [])
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		const getProducts = async () => {
+			try {
+				const response = await api.get<ProductList>('/product/all')
+				setProducts(response.data)
+				const categories = await api.get<Categories>('/category')
+				setCategories(categories.data)
+			} catch {
+				console.error('Error fetching products')
+			}
+		}
+		getProducts()
+	}, [])
 
-  return (
-    <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 h-full">
-      <Tabs defaultValue="products">
-        <TabsList>
-          <div className="flex items-center">
-            <TabsTrigger value="products">Products</TabsTrigger>
-            <TabsTrigger value="categories">Categories</TabsTrigger>
-          </div>
-        </TabsList>
-        <TabsContent value="products">
-          <Card x-chunk="dashboard-06-chunk-0" className="h-full">
-            <CardHeader>
-              <CardTitle>Produtos</CardTitle>
-              <CardDescription>
-                Administre os produtos da sua loja.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ProductsTable products={products} />
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="categories">
-          <Card x-chunk="dashboard-06-chunk-0" className="h-full">
-            <CardHeader>
-              <CardTitle>Categorias</CardTitle>
-              <CardDescription>
-                Administre as categorias de produtos.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <CategoriesTable categories={categories} />
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-    </main>
-  )
+	return (
+		<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 h-full">
+			<Tabs defaultValue="products">
+				<TabsList>
+					<div className="flex items-center">
+						<TabsTrigger value="products">Produtos</TabsTrigger>
+						<TabsTrigger value="categories">Categorias</TabsTrigger>
+					</div>
+				</TabsList>
+				<TabsContent value="products">
+					<Card x-chunk="dashboard-06-chunk-0" className="h-full">
+						<CardHeader>
+							<CardTitle>Produtos</CardTitle>
+							<CardDescription>
+								Administre os produtos da sua loja.
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<ProductsTable products={products} />
+						</CardContent>
+					</Card>
+				</TabsContent>
+				<TabsContent value="categories">
+					<Card x-chunk="dashboard-06-chunk-0" className="h-full">
+						<CardHeader>
+							<CardTitle>Categorias</CardTitle>
+							<CardDescription>
+								Administre as categorias de produtos.
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<CategoriesTable categories={categories} />
+						</CardContent>
+					</Card>
+				</TabsContent>
+			</Tabs>
+		</main>
+	)
 }
 
 export const getServerSideProps = canSSRAuth(async (ctx) => {
-  return {
-    props: {},
-  }
+	return {
+		props: {},
+	}
 })

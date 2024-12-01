@@ -37,6 +37,7 @@ import { api } from '@/services/apiClient'
 import type { User, Users } from '@/types/user'
 import { ChevronDown, ChevronsUpDown, EllipsisVertical, X } from 'lucide-react'
 import { toast } from 'sonner'
+import { AddUser } from './add-user'
 import { Badge } from './ui/badge'
 
 export const columns: ColumnDef<User>[] = [
@@ -244,7 +245,7 @@ export function UsersTable({ users }: UsersTableProps) {
 
 	return (
 		<div className="w-full">
-			<div className="flex items-center py-4">
+			<div className="flex items-center py-4 gap-4">
 				<Input
 					placeholder="Filter Categories..."
 					value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
@@ -253,32 +254,7 @@ export function UsersTable({ users }: UsersTableProps) {
 					}
 					className="max-w-sm"
 				/>
-				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<Button variant="outline" className="ml-auto">
-							Columns <ChevronDown className="ml-2 h-4 w-4" />
-						</Button>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align="end">
-						{table
-							.getAllColumns()
-							.filter((column) => column.getCanHide())
-							.map((column) => {
-								return (
-									<DropdownMenuCheckboxItem
-										key={column.id}
-										className="capitalize"
-										checked={column.getIsVisible()}
-										onCheckedChange={(value) =>
-											column.toggleVisibility(!!value)
-										}
-									>
-										{column.id}
-									</DropdownMenuCheckboxItem>
-								)
-							})}
-					</DropdownMenuContent>
-				</DropdownMenu>
+				<AddUser />
 			</div>
 			<div className="rounded-md border">
 				<Table>

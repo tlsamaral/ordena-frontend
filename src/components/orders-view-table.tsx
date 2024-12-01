@@ -114,45 +114,47 @@ function OrderTable({
 	orderSelected,
 }: OrderTableProps) {
 	return (
-		<Table>
-			<TableHeader>
-				<TableRow>
-					<TableHead>Cliente</TableHead>
-					<TableHead className="sm:table-cell">Mesa</TableHead>
-					<TableHead className="sm:table-cell w-[120px]">Status</TableHead>
-					<TableHead className="md:table-cell">Abertura do pedido</TableHead>
-					<TableHead className="sm:table-cell">Valor do pedido</TableHead>
-				</TableRow>
-			</TableHeader>
-			<TableBody>
-				{orders.map((order) => {
-					const orderValue = order.items.reduce((acc, item) => {
-						return acc + Number(item.product.price) * item.amount
-					}, 0)
-					return (
-						<TableRow
-							key={order.id}
-							onClick={() => onOrderPreview(order)}
-							className={order.id === orderSelected.id ? 'bg-muted' : ''}
-						>
-							<TableCell>{order.name}</TableCell>
-							<TableCell className="sm:table-cell">
-								{order.table.name}
-							</TableCell>
-							<TableCell className="flex items-center gap-2">
-								<OrderStatus orderStatus={order.status} />{' '}
-								{getOrderStatusName(order.status)}
-							</TableCell>
-							<TableCell className="hidden md:table-cell">
-								{order.created_at !== null
-									? formatDistance(order.created_at)
-									: ''}
-							</TableCell>
-							<TableCell>{formatValueToMoney(orderValue)}</TableCell>
-						</TableRow>
-					)
-				})}
-			</TableBody>
-		</Table>
+		<div className="overflow-x-auto">
+			<Table className="w-full min-w-[600px]">
+				<TableHeader>
+					<TableRow>
+						<TableHead>Cliente</TableHead>
+						<TableHead className="sm:table-cell">Mesa</TableHead>
+						<TableHead className="sm:table-cell w-[120px]">Status</TableHead>
+						<TableHead className="md:table-cell">Abertura do pedido</TableHead>
+						<TableHead className="sm:table-cell">Valor do pedido</TableHead>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
+					{orders.map((order) => {
+						const orderValue = order.items.reduce((acc, item) => {
+							return acc + Number(item.product.price) * item.amount
+						}, 0)
+						return (
+							<TableRow
+								key={order.id}
+								onClick={() => onOrderPreview(order)}
+								className={order.id === orderSelected.id ? 'bg-muted' : ''}
+							>
+								<TableCell>{order.name}</TableCell>
+								<TableCell className="sm:table-cell">
+									{order.table.name}
+								</TableCell>
+								<TableCell className="flex items-center gap-2">
+									<OrderStatus orderStatus={order.status} />{' '}
+									{getOrderStatusName(order.status)}
+								</TableCell>
+								<TableCell className="hidden md:table-cell">
+									{order.created_at !== null
+										? formatDistance(order.created_at)
+										: ''}
+								</TableCell>
+								<TableCell>{formatValueToMoney(orderValue)}</TableCell>
+							</TableRow>
+						)
+					})}
+				</TableBody>
+			</Table>
+		</div>
 	)
 }

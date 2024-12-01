@@ -85,7 +85,7 @@ export default function Dashboard({ orders }: DashboardProps) {
 	return (
 		<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
 			<div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
-				<div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+				<div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-4">
 					<Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
 						<CardHeader className="pb-3">
 							<CardTitle>Seus pedidos</CardTitle>
@@ -105,7 +105,9 @@ export default function Dashboard({ orders }: DashboardProps) {
 					<Card x-chunk="dashboard-05-chunk-1">
 						<CardHeader className="pb-2">
 							<CardDescription>Pedidos abertos</CardDescription>
-							<CardTitle className="text-4xl">+{newOrders}</CardTitle>
+							<CardTitle className="text-lg sm:text-2xl md:text-4xl">
+								+{newOrders}
+							</CardTitle>
 						</CardHeader>
 						<CardContent>
 							<div className="text-xs text-muted-foreground">
@@ -116,10 +118,13 @@ export default function Dashboard({ orders }: DashboardProps) {
 							<Progress value={25} aria-label="25% increase" />
 						</CardFooter>
 					</Card>
-					<Card x-chunk="dashboard-05-chunk-2">
+					<Card
+						x-chunk="dashboard-05-chunk-2"
+						className="md:col-span-3 lg:col-span-1"
+					>
 						<CardHeader className="pb-2">
 							<CardDescription>Faturamento</CardDescription>
-							<CardTitle className="text-4xl">
+							<CardTitle className="text-lg sm:text-2xl md:text-4xl">
 								{formatValueToMoney(valueToday)}
 							</CardTitle>
 						</CardHeader>
