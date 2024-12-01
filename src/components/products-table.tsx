@@ -104,7 +104,6 @@ export const columns: ColumnDef<Product>[] = [
 		header: () => <div className="text-right">Preço</div>,
 		cell: ({ row }) => {
 			const price = row.getValue('price')
-			console.log(price)
 			const amount = Number.parseFloat(row.getValue('price'))
 
 			const formatted = new Intl.NumberFormat('pt-BR', {
