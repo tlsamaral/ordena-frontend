@@ -72,6 +72,7 @@ export const columns: ColumnDef<Product>[] = [
           alt="product-image"
           width={50}
           height={50}
+          className="rounded-lg"
         />
       </div>
     ),
