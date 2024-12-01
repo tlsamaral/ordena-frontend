@@ -101,7 +101,7 @@ export const columns: ColumnDef<Product>[] = [
 	},
 	{
 		accessorKey: 'price',
-		header: () => <div className="text-right">Price</div>,
+		header: () => <div className="text-right">Preço</div>,
 		cell: ({ row }) => {
 			const price = row.getValue('price')
 			console.log(price)
