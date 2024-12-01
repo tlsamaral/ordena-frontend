@@ -1,8 +1,9 @@
 export interface User {
-	name: string;
-	email: string;
-	id: string;
-	admin: boolean;
+	id: string
+	name: string
+	email: string
+	admin: boolean
+	permission: boolean
 }
 
-export type Users = User[];
+export type Users = User[]
