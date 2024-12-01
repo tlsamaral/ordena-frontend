@@ -24,6 +24,8 @@ export const translatePath = (path: string) => {
 			return 'Categorias'
 		case 'orders':
 			return 'Pedidos'
+		case 'new':
+			return 'Novo'
 		default:
 			return path
 	}
