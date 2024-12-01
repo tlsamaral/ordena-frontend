@@ -8,6 +8,7 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
+import { translatePath } from '@/utils/translate-path'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -37,10 +38,12 @@ export function PageTrial() {
 					return (
 						<BreadcrumbItem key={`${href}-${index}`}>
 							{isLast ? (
-								<BreadcrumbPage>{segment}</BreadcrumbPage>
+								<BreadcrumbPage>{translatePath(segment)}</BreadcrumbPage>
 							) : (
 								<>
-									<BreadcrumbLink href={href}>{segment}</BreadcrumbLink>
+									<BreadcrumbLink href={href}>
+										{translatePath(segment)}
+									</BreadcrumbLink>
 									<BreadcrumbSeparator />
 								</>
 							)}
