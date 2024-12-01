@@ -89,10 +89,13 @@ export default function NewOrderPage({
 	}
 
 	let productsListed = products
+	console.log(categorySelected)
 	if (categorySelected) {
+		console.log(products)
 		productsListed = products.filter(
 			(product) => product.category_id === categorySelected,
 		)
+		console.log(productsListed)
 	}
 
 	return (
@@ -193,7 +196,7 @@ export default function NewOrderPage({
 							</div>
 							<div className="col-span-3">
 								<SearchProduct
-									products={products}
+									products={productsListed}
 									onProductChange={handleSelectProduct}
 									productsListed={productsList}
 									className="w-full"
