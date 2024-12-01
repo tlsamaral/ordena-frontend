@@ -35,7 +35,7 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
-import { AuthContext } from '@/contexts/AuthContext'
+import { AuthContext, signOut } from '@/contexts/AuthContext'
 import { useContext } from 'react'
 import { navItems } from './aside'
 import { NavItem } from './nav-item'
@@ -94,7 +94,7 @@ export function Header() {
 							<ToggleTheme />
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem>
+						<DropdownMenuItem onClick={signOut}>
 							<LogOut size={20} /> Sair
 						</DropdownMenuItem>
 					</DropdownMenuContent>
