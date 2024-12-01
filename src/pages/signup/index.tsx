@@ -95,7 +95,7 @@ export default function SignUp() {
 						</div>
 						<form onSubmit={handleSubmit(handleSigIn)} className="grid gap-3">
 							<div className="grid gap-2">
-								<Label htmlFor="name">Email</Label>
+								<Label htmlFor="name">Nome</Label>
 								<Input
 									id="name"
 									type="name"

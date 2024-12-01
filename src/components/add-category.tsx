@@ -65,7 +65,7 @@ export function AddCategory() {
 					</span>
 				</Button>
 			</DialogTrigger>
-			<DialogContent className="sm:max-w-[500px] bg-zinc-900">
+			<DialogContent className="max-w-[350px] sm:max-w-[500px]">
 				<DialogHeader>
 					<DialogTitle>Adionar Categoria</DialogTitle>
 					<DialogDescription>Preencha esta categoria.</DialogDescription>
@@ -88,7 +88,8 @@ export function AddCategory() {
 					</div>
 					<DialogFooter>
 						<Button type="submit" size="sm">
-							Save product <CheckCircle size={16} className="text-sm ml-3" />
+							Salvar categoria{' '}
+							<CheckCircle size={16} className="text-sm ml-2" />
 						</Button>
 					</DialogFooter>
 				</form>
