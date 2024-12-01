@@ -93,10 +93,11 @@ export const columns: ColumnDef<Category>[] = [
 
 			const deleteCategory = async () => {
 				try {
-					await api.delete(`/categories/${payment.id}`)
+					await api.delete(`/category/${payment.id}`)
 					setCategories((prev) => prev.filter((p) => p.id !== payment.id))
 					toast('Categoria deletada', {
-						description: 'Sunday, December 03, 2023 at 9:00 AM',
+						description: `${payment.name} foi deletada com sucesso.`,
+						icon: '😶',
 					})
 				} catch (err) {
 					console.error(err)
@@ -119,12 +120,6 @@ export const columns: ColumnDef<Category>[] = [
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
 						<DropdownMenuLabel>Actions</DropdownMenuLabel>
-						<DropdownMenuItem
-							onClick={() => navigator.clipboard.writeText(payment.id)}
-						>
-							Copy payment ID
-						</DropdownMenuItem>
-						<DropdownMenuSeparator />
 						<DropdownMenuItem>
 							<Button
 								className="h-7 w-full"
