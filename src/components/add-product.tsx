@@ -226,10 +226,13 @@ export function AddProduct() {
 									required
 									accept="image/png, image/jpeg, image/svg, image/webp, image/gif"
 								/>
-								<span className="p-3 rounded-full bg-zinc-900 border">
-									<Upload size={16} color="#fff" />
+								<span className="p-3 rounded-full dark:bg-zinc-900 bg-zinc-200 border">
+									<Upload
+										size={16}
+										className="text-zinc-800 dark:text-zinc-50"
+									/>
 								</span>
-								<span className="text-zinc-100">
+								<span className="dark:text-zinc-100 text-zinc-800">
 									<span className="text-red-400">Clique aqui</span> para
 									adicionar uma imagem
 								</span>
