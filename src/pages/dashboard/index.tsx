@@ -55,7 +55,9 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ orders }: DashboardProps) {
-	const [orderPreview, setOrderPreview] = useState<Order>(orders[0])
+	const [orderPreview, setOrderPreview] = useState<Order | null>(
+		orders[0] || null,
+	)
 	const newOrders = orders.length
 	const valueToday = orders.reduce((acc, order) => {
 		return order.items.reduce(
@@ -69,6 +71,7 @@ export default function Dashboard({ orders }: DashboardProps) {
 	}
 
 	function handleNextOrder() {
+		if (!orderPreview) return
 		const index = orders.findIndex((order) => order.id === orderPreview.id)
 		if (index < orders.length - 1) {
 			setOrderPreview(orders[index + 1])
@@ -76,6 +79,7 @@ export default function Dashboard({ orders }: DashboardProps) {
 	}
 
 	function handlePreviousOrder() {
+		if (!orderPreview) return
 		const index = orders.findIndex((order) => order.id === orderPreview.id)
 		if (index > 0) {
 			setOrderPreview(orders[index - 1])

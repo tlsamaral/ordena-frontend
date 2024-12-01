@@ -29,7 +29,7 @@ import { Pagination, PaginationContent, PaginationItem } from './ui/pagination'
 import { Separator } from './ui/separator'
 
 interface OrderPreviewProps {
-	order: Order
+	order: Order | null
 	onNextOrder: () => void
 	onPreviousOrder: () => void
 }
@@ -38,8 +38,12 @@ export function OrderPreview({
 	onNextOrder,
 	onPreviousOrder,
 }: OrderPreviewProps) {
+	if (!order) {
+		return null
+	}
+
 	const orderTotal =
-		order.items.reduce((acc, item) => {
+		order?.items.reduce((acc, item) => {
 			return acc + item.amount * Number(item.product.price)
 		}, 0) ?? 0
 	return (

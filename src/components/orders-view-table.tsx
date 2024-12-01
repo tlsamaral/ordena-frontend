@@ -26,7 +26,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
 interface OrdersViewTableProps {
 	orders: Order[]
 	onOrderPreview: (order: Order) => void
-	orderPreview: Order
+	orderPreview: Order | null
 }
 export function OrdersViewTable({
 	orders,
@@ -106,7 +106,7 @@ export function OrdersViewTable({
 interface OrderTableProps {
 	orders: Order[]
 	onOrderPreview: (order: Order) => void
-	orderSelected: Order
+	orderSelected: Order | null
 }
 function OrderTable({
 	orders,
@@ -134,7 +134,7 @@ function OrderTable({
 							<TableRow
 								key={order.id}
 								onClick={() => onOrderPreview(order)}
-								className={order.id === orderSelected.id ? 'bg-muted' : ''}
+								className={order.id === orderSelected?.id ? 'bg-muted' : ''}
 							>
 								<TableCell>{order.name}</TableCell>
 								<TableCell className="sm:table-cell">
