@@ -38,9 +38,11 @@ export function OrderPreview({
 	onNextOrder,
 	onPreviousOrder,
 }: OrderPreviewProps) {
-	const orderTotal = order.items.reduce((acc, item) => {
-		return acc + item.amount * Number(item.product.price)
-	}, 0)
+	console.log(order)
+	const orderTotal =
+		order.items?.reduce((acc, item) => {
+			return acc + item.amount * Number(item.product.price)
+		}, 0) ?? 0
 	return (
 		<div>
 			<Card className="overflow-hidden" x-chunk="dashboard-05-chunk-4">
@@ -69,7 +71,7 @@ export function OrderPreview({
 					<div className="grid gap-3">
 						<div className="font-semibold">Detalhes do pedido</div>
 						<ul className="grid gap-3">
-							{order.items.map((item) => (
+							{order.items?.map((item) => (
 								<li className="flex items-center justify-between" key={item.id}>
 									<span className="text-muted-foreground">
 										{item.product.name} <span>{item.amount}</span>
