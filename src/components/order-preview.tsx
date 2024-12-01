@@ -44,7 +44,10 @@ export function OrderPreview({
 		}, 0) ?? 0
 	return (
 		<div>
-			<Card className="overflow-hidden" x-chunk="dashboard-05-chunk-4">
+			<Card
+				className="max-w-full overflow-hidden"
+				x-chunk="dashboard-05-chunk-4"
+			>
 				<CardHeader className="flex flex-row items-start bg-muted/50">
 					<div className="grid gap-0.5">
 						<CardTitle className="group flex items-center gap-4 text-lg">

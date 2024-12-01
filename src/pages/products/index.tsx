@@ -57,7 +57,10 @@ export default function Products() {
 					</div>
 				</TabsList>
 				<TabsContent value="products">
-					<Card x-chunk="dashboard-06-chunk-0" className="h-full">
+					<Card
+						x-chunk="dashboard-06-chunk-0"
+						className="max-w-full overflow-hidden"
+					>
 						<CardHeader>
 							<CardTitle>Produtos</CardTitle>
 							<CardDescription>
@@ -70,7 +73,10 @@ export default function Products() {
 					</Card>
 				</TabsContent>
 				<TabsContent value="categories">
-					<Card x-chunk="dashboard-06-chunk-0" className="h-full">
+					<Card
+						x-chunk="dashboard-06-chunk-0"
+						className="max-w-full overflow-hidden"
+					>
 						<CardHeader>
 							<CardTitle>Categorias</CardTitle>
 							<CardDescription>

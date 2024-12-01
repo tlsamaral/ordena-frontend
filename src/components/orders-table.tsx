@@ -272,8 +272,8 @@ export function OrdersTable({ orders }: OrdersTableProps) {
 	}
 
 	return (
-		<>
-			<div className="">
+		<div className="w-full max-w-full">
+			<div className="w-full max-w-full overflow-x-auto">
 				<div className="flex items-center justify-between py-4 gap-4">
 					<Input
 						placeholder="Filtrar pedidos por mesa..."
@@ -286,7 +286,7 @@ export function OrdersTable({ orders }: OrdersTableProps) {
 					<NewOrderBase />
 				</div>
 				<div className="rounded-md border">
-					<Table>
+					<Table className="w-full min-w-[600px]">
 						<TableHeader>
 							{table.getHeaderGroups().map((headerGroup) => (
 								<TableRow key={headerGroup.id}>
@@ -368,6 +368,6 @@ export function OrdersTable({ orders }: OrdersTableProps) {
 					order={orderForView}
 				/>
 			)}
-		</>
+		</div>
 	)
 }

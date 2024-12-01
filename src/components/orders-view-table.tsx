@@ -45,7 +45,10 @@ export function OrdersViewTable({
 				</TabsList>
 			</div>
 			<TabsContent value="all">
-				<Card x-chunk="dashboard-05-chunk-3">
+				<Card
+					x-chunk="dashboard-05-chunk-3"
+					className="max-w-full overflow-hidden"
+				>
 					<CardHeader className="px-7">
 						<CardTitle>Todos os pedidos</CardTitle>
 						<CardDescription>Todos os pedidos</CardDescription>
@@ -60,7 +63,10 @@ export function OrdersViewTable({
 				</Card>
 			</TabsContent>
 			<TabsContent value="opened">
-				<Card x-chunk="dashboard-05-chunk-3">
+				<Card
+					x-chunk="dashboard-05-chunk-3"
+					className="max-w-full overflow-hidden"
+				>
 					<CardHeader className="px-7">
 						<CardTitle>Pedidos em aberto</CardTitle>
 						<CardDescription>
@@ -77,7 +83,7 @@ export function OrdersViewTable({
 				</Card>
 			</TabsContent>
 			<TabsContent value="in-preparation">
-				<Card x-chunk="dashboard-05-chunk-3">
+				<Card x-chunk="dashboard-05-chunk-3" className="max-w-full">
 					<CardHeader className="px-7">
 						<CardTitle>Pedidos sendo preparados</CardTitle>
 						<CardDescription>

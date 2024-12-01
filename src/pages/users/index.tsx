@@ -41,7 +41,10 @@ export default function UsersPage() {
 
 	return (
 		<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-			<Card x-chunk="dashboard-06-chunk-0">
+			<Card
+				x-chunk="dashboard-06-chunk-0"
+				className="max-w-full overflow-hidden"
+			>
 				<CardHeader>
 					<CardTitle>Usuários</CardTitle>
 					<CardDescription>Gerencie os usuários do restaurante</CardDescription>
