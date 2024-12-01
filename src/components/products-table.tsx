@@ -122,9 +122,12 @@ export const columns: ColumnDef<Product>[] = [
 
 			const deleteProduct = async () => {
 				try {
-					await api.delete(`/products/${payment.id}`)
+					await api.delete(`/product/${payment.id}`)
 					setProducts((prev) => prev.filter((p) => p.id !== payment.id))
-					toast('Produto deletado', {})
+					toast('Produto deletado', {
+						description: `${payment.name} foi deletado com sucesso.`,
+						icon: '😶',
+					})
 				} catch (err) {
 					console.error(err)
 					toast('', {
