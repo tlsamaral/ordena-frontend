@@ -9,11 +9,11 @@ import {
 	getPaginationRowModel,
 	getSortedRowModel,
 	useReactTable,
-} from "@tanstack/react-table";
-import * as React from "react";
+} from '@tanstack/react-table'
+import * as React from 'react'
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
@@ -22,8 +22,8 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/dropdown-menu'
+import { Input } from '@/components/ui/input'
 import {
 	Table,
 	TableBody,
@@ -31,22 +31,22 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from "@/components/ui/table";
-import { GlobalContext } from "@/contexts/GlobalContext";
-import { api } from "@/services/apiClient";
-import type { User, Users } from "@/types/user";
-import { ChevronDown, ChevronsUpDown, EllipsisVertical, X } from "lucide-react";
-import { toast } from "sonner";
-import { Badge } from "./ui/badge";
+} from '@/components/ui/table'
+import { GlobalContext } from '@/contexts/GlobalContext'
+import { api } from '@/services/apiClient'
+import type { User, Users } from '@/types/user'
+import { ChevronDown, ChevronsUpDown, EllipsisVertical, X } from 'lucide-react'
+import { toast } from 'sonner'
+import { Badge } from './ui/badge'
 
 export const columns: ColumnDef<User>[] = [
 	{
-		id: "select",
+		id: 'select',
 		header: ({ table }) => (
 			<Checkbox
 				checked={
 					table.getIsAllPageRowsSelected() ||
-					(table.getIsSomePageRowsSelected() && "indeterminate")
+					(table.getIsSomePageRowsSelected() && 'indeterminate')
 				}
 				onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
 				aria-label="Select all"
@@ -63,39 +63,123 @@ export const columns: ColumnDef<User>[] = [
 		enableHiding: false,
 	},
 	{
-		accessorKey: "name",
+		accessorKey: 'name',
 		header: ({ column }) => {
 			return (
 				<Button
 					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
 					Name
 					<ChevronsUpDown className="ml-2 h-4 w-4" />
 				</Button>
-			);
+			)
 		},
-		cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
+		cell: ({ row }) => <div className="capitalize">{row.getValue('name')}</div>,
 	},
 	{
-		accessorKey: "admin",
-		header: "Role",
+		accessorKey: 'admin',
+		header: 'Role',
 		cell: ({ row }) => {
-			const payment = row.original;
-			const role = payment.admin ? "Admin" : "User";
+			const payment = row.original
+			const role = payment.admin ? 'Administrador' : 'Usuário'
 
 			return (
 				<div className="capitalize">
-					<Badge className="h-5">{role}</Badge>
+					<Badge className="h-5 px-3">{role}</Badge>
 				</div>
-			);
+			)
 		},
 	},
 	{
-		id: "actions",
+		accessorKey: 'permission',
+		header: 'Permissão',
+		cell: ({ row }) => {
+			const user = row.original
+			const role = user.permission ? 'Aceito' : 'Pendente'
+
+			return (
+				<div className="capitalize flex items-center gap-2">
+					<div
+						className={`h-2 w-2 rounded-full ${user.permission ? 'bg-green-500' : 'bg-red-500'}`}
+					/>
+					{role}
+				</div>
+			)
+		},
+	},
+	{
+		id: 'actions',
 		enableHiding: false,
 		cell: ({ row }) => {
-			const payment = row.original;
+			const { setUsers } = React.useContext(GlobalContext)
+			const user = row.original
+			function acceptUser() {
+				try {
+					api.put('/users/accept', {
+						user_id: user.id,
+					})
+					toast('Feito! 🚀', {
+						description: `${user.name} foi aceito com sucesso, e agora já pode logar na plataforma.`,
+						icon: '🚀',
+					})
+					setUsers((prev) =>
+						prev.map((u) =>
+							u.id === user.id ? { ...u, permission: true } : u,
+						),
+					)
+				} catch (error) {
+					console.error(error)
+				}
+			}
+
+			function rejectUser() {
+				try {
+					api.put('/users/reject', {
+						user_id: user.id,
+					})
+					toast('Feito! 😓', {
+						description: `${user.name} não pode mais acessar a plataforma.`,
+						icon: '😓',
+					})
+					setUsers((prev) =>
+						prev.map((u) =>
+							u.id === user.id ? { ...u, permission: false } : u,
+						),
+					)
+				} catch (error) {
+					console.error(error)
+				}
+			}
+
+			const handleUserPermission = () => {
+				if (user.permission) {
+					rejectUser()
+				} else {
+					acceptUser()
+				}
+			}
+
+			const deleteUser = async () => {
+				try {
+					await api.delete(`/users/${user.id}`)
+					setUsers((prev) => prev.filter((u) => u.id !== user.id))
+					toast('Usuário deletado', {
+						description: `${user.name} foi deletado com sucesso.`,
+						icon: '😶',
+					})
+					setUsers((prev) => prev.filter((u) => u.id !== user.id))
+				} catch (err) {
+					console.error(err)
+					toast('', {
+						icon: <X size={14} />,
+						className:
+							'destructive group border-destructive bg-destructive text-destructive-foreground',
+						description: 'Ocorreu um erro ao deletar este produto.',
+					})
+				}
+			}
+
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
@@ -105,37 +189,39 @@ export const columns: ColumnDef<User>[] = [
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
-						<DropdownMenuLabel>Actions</DropdownMenuLabel>
-						<DropdownMenuItem
-							onClick={() => navigator.clipboard.writeText(payment.id)}
-						>
-							Reset Password
+						<DropdownMenuLabel>Ações</DropdownMenuLabel>
+						<DropdownMenuItem onClick={handleUserPermission}>
+							{user.permission ? 'Remover permissão' : 'Atribuir permissão'}
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem>
-							<Button className="h-7 w-full" variant="destructive">
+							<Button
+								className="h-7 w-full"
+								variant="destructive"
+								onClick={deleteUser}
+							>
 								Delete
 							</Button>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
-			);
+			)
 		},
 	},
-];
+]
 
 interface UsersTableProps {
-	users: Users;
+	users: Users
 }
 
 export function UsersTable({ users }: UsersTableProps) {
-	const [sorting, setSorting] = React.useState<SortingState>([]);
+	const [sorting, setSorting] = React.useState<SortingState>([])
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
 		[],
-	);
+	)
 	const [columnVisibility, setColumnVisibility] =
-		React.useState<VisibilityState>({});
-	const [rowSelection, setRowSelection] = React.useState({});
+		React.useState<VisibilityState>({})
+	const [rowSelection, setRowSelection] = React.useState({})
 
 	const table = useReactTable({
 		data: users,
@@ -154,16 +240,16 @@ export function UsersTable({ users }: UsersTableProps) {
 			columnVisibility,
 			rowSelection,
 		},
-	});
+	})
 
 	return (
 		<div className="w-full">
 			<div className="flex items-center py-4">
 				<Input
 					placeholder="Filter Categories..."
-					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+					value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
 					onChange={(event) =>
-						table.getColumn("name")?.setFilterValue(event.target.value)
+						table.getColumn('name')?.setFilterValue(event.target.value)
 					}
 					className="max-w-sm"
 				/>
@@ -189,7 +275,7 @@ export function UsersTable({ users }: UsersTableProps) {
 									>
 										{column.id}
 									</DropdownMenuCheckboxItem>
-								);
+								)
 							})}
 					</DropdownMenuContent>
 				</DropdownMenu>
@@ -209,7 +295,7 @@ export function UsersTable({ users }: UsersTableProps) {
 														header.getContext(),
 													)}
 										</TableHead>
-									);
+									)
 								})}
 							</TableRow>
 						))}
@@ -219,7 +305,7 @@ export function UsersTable({ users }: UsersTableProps) {
 							table.getRowModel().rows.map((row) => (
 								<TableRow
 									key={row.id}
-									data-state={row.getIsSelected() && "selected"}
+									data-state={row.getIsSelected() && 'selected'}
 								>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
@@ -246,7 +332,7 @@ export function UsersTable({ users }: UsersTableProps) {
 			</div>
 			<div className="flex items-center justify-end space-x-2 py-4">
 				<div className="flex-1 text-sm text-muted-foreground">
-					{table.getFilteredSelectedRowModel().rows.length} of{" "}
+					{table.getFilteredSelectedRowModel().rows.length} of{' '}
 					{table.getFilteredRowModel().rows.length} row(s) selected.
 				</div>
 				<div className="space-x-2">
@@ -269,5 +355,5 @@ export function UsersTable({ users }: UsersTableProps) {
 				</div>
 			</div>
 		</div>
-	);
+	)
 }
