@@ -164,12 +164,20 @@ export default function Dashboard({ orders }: DashboardProps) {
 }
 
 export const getServerSideProps = canSSRAuth(async (ctx) => {
-	const apiClient = setupAPIClient(ctx)
-	const response = await apiClient.get<Order[]>('/orders')
+	try {
+		const apiClient = setupAPIClient(ctx)
+		const response = await apiClient.get<Order[]>('/orders')
 
-	return {
-		props: {
-			orders: response.data,
-		},
+		return {
+			props: {
+				orders: response.data,
+			},
+		}
+	} catch (error) {
+		return {
+			props: {
+				orders: [],
+			},
+		}
 	}
 })
