@@ -217,10 +217,11 @@ export default function NewOrderPage({
 									<div className="flex flex-col gap-2">
 										<div className="w-full flex justify-between pb-2 border-b dark:border-zinc-800 border-zinc-200">
 											<TextApp>{productsList.length} produto(s)</TextApp>
-											<TextApp>
+											<TextApp className="font-semibold">
 												{formatValueToMoney(
 													productsList.reduce(
-														(acc, product) => acc + Number(product.price),
+														(acc, product) =>
+															acc + Number(product.price) * product.amount,
 														0,
 													),
 												)}
