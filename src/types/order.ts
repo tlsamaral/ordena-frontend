@@ -8,7 +8,7 @@ export interface Order {
 	name: string | null
 	created_at: Date | null
 	updated_at: Date | null
-	items: Item[] | null
+	items: Item[]
 	table: {
 		name: string
 	}
