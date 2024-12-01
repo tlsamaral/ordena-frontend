@@ -202,7 +202,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
 		<div className="w-full">
 			<div className="flex items-center py-4 justify-between gap-2">
 				<Input
-					placeholder="FFiltrar por nome..."
+					placeholder="Filtrar por nome..."
 					value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
 					onChange={(event) =>
 						table.getColumn('name')?.setFilterValue(event.target.value)
@@ -265,8 +265,8 @@ export function ProductsTable({ products }: ProductsTableProps) {
 			</div>
 			<div className="flex items-center justify-end space-x-2 py-4">
 				<div className="flex-1 text-sm text-muted-foreground">
-					{table.getFilteredSelectedRowModel().rows.length} of{' '}
-					{table.getFilteredRowModel().rows.length} row(s) selected.
+					{table.getFilteredSelectedRowModel().rows.length} de{' '}
+					{table.getFilteredRowModel().rows.length} linhas(s) selecionados.
 				</div>
 				<div className="space-x-2">
 					<Button
@@ -275,7 +275,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
 						onClick={() => table.previousPage()}
 						disabled={!table.getCanPreviousPage()}
 					>
-						Previous
+						Anterior
 					</Button>
 					<Button
 						variant="outline"
@@ -283,7 +283,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
 						onClick={() => table.nextPage()}
 						disabled={!table.getCanNextPage()}
 					>
-						Next
+						Próximo
 					</Button>
 				</div>
 			</div>

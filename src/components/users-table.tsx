@@ -79,6 +79,23 @@ export const columns: ColumnDef<User>[] = [
 		cell: ({ row }) => <div className="capitalize">{row.getValue('name')}</div>,
 	},
 	{
+		accessorKey: 'email',
+		header: ({ column }) => {
+			return (
+				<Button
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+				>
+					Email
+					<ChevronsUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			)
+		},
+		cell: ({ row }) => (
+			<div className="capitalize">{row.getValue('email')}</div>
+		),
+	},
+	{
 		accessorKey: 'admin',
 		header: 'Role',
 		cell: ({ row }) => {
@@ -245,9 +262,9 @@ export function UsersTable({ users }: UsersTableProps) {
 
 	return (
 		<div className="w-full">
-			<div className="flex items-center py-4 gap-4">
+			<div className="flex items-center py-4 gap-4 justify-between">
 				<Input
-					placeholder="Filter Categories..."
+					placeholder="Filtrar por nome..."
 					value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
 					onChange={(event) =>
 						table.getColumn('name')?.setFilterValue(event.target.value)
@@ -318,7 +335,7 @@ export function UsersTable({ users }: UsersTableProps) {
 						onClick={() => table.previousPage()}
 						disabled={!table.getCanPreviousPage()}
 					>
-						Previous
+						Anterior
 					</Button>
 					<Button
 						variant="outline"
@@ -326,7 +343,7 @@ export function UsersTable({ users }: UsersTableProps) {
 						onClick={() => table.nextPage()}
 						disabled={!table.getCanNextPage()}
 					>
-						Next
+						Próximo
 					</Button>
 				</div>
 			</div>
