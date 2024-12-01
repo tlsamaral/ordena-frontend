@@ -23,6 +23,7 @@ export function AlterPassword() {
 	const [open, setOpen] = useState(false)
 
 	useEffect(() => {
+		console.log(user)
 		if (user?.alter_password) {
 			setPassword('')
 			setConfirmPassword('')

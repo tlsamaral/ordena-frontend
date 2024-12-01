@@ -32,6 +32,7 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table'
+import { GlobalContext } from '@/contexts/GlobalContext'
 import { api } from '@/services/apiClient'
 import type { Order, OrderTypes } from '@/types/order'
 import { formatDistance } from '@/utils/formatDistanceToNow'
@@ -39,11 +40,13 @@ import { getOrderStatusName } from '@/utils/getOrderStatusName'
 import {
 	ArrowRightLeft,
 	ArrowUpDown,
+	CheckCircle,
 	ChevronDown,
 	ChevronsUpDown,
 	EllipsisVertical,
 	X,
 } from 'lucide-react'
+import { toast } from 'sonner'
 import NewOrderBase from './new-order-base'
 import { OrderStatus } from './order-status'
 import { OrderView } from './order-view'
@@ -190,6 +193,25 @@ export const columns: ColumnDef<Order>[] = [
 					console.error(error)
 				}
 			}
+
+			const { setRealTimeOrders } = React.useContext(GlobalContext)
+			const cancelOrder = async () => {
+				try {
+					await api.put('/order/cancel', {
+						order_id: row.original.id,
+					})
+					toast('Pedido cancelado', {
+						description: `O pedido de ${row.original.name} foi cancelado com sucesso.`,
+						icon: <CheckCircle size={14} className="text-green-500" />,
+					})
+					setRealTimeOrders((prevOrders) =>
+						prevOrders.filter((order) => order.id !== row.original.id),
+					)
+				} catch (error) {
+					console.error(error)
+				}
+			}
+
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
@@ -221,7 +243,11 @@ export const columns: ColumnDef<Order>[] = [
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem asChild>
-							<Button className="h-7 w-full hover:text-red-500" variant="ghost">
+							<Button
+								className="h-7 w-full hover:text-red-500"
+								variant="ghost"
+								onClick={cancelOrder}
+							>
 								Cancelar pedido
 							</Button>
 						</DropdownMenuItem>

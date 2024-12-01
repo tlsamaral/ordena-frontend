@@ -6,21 +6,24 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card'
+import { GlobalContext } from '@/contexts/GlobalContext'
 import { setupAPIClient } from '@/services/api'
 import { initializeSocket } from '@/services/socket/socket'
 import type { Order } from '@/types/order'
 import { canSSRAuth } from '@/utils/canSSRAuth'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { set } from 'zod'
 
 interface OrdersPageProps {
 	orders: Order[]
 }
 
 export default function OrdersPage({ orders }: OrdersPageProps) {
-	const [realTimeOrders, setRealTimeOrders] = useState<Order[]>(orders)
 	const audioRef = useRef<HTMLAudioElement | null>(null)
+	const { realTimeOrders, setRealTimeOrders } = useContext(GlobalContext)
 
 	useEffect(() => {
+		setRealTimeOrders(orders)
 		// Inicializa o áudio apenas no lado do cliente
 		audioRef.current = new Audio('/order-complete.mp3')
 
@@ -76,7 +79,7 @@ export default function OrdersPage({ orders }: OrdersPageProps) {
 			socket.off('order:end', removeOrderByList)
 			console.log('Disconnected from WebSocket server')
 		}
-	}, [])
+	}, [setRealTimeOrders, orders])
 
 	return (
 		<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">

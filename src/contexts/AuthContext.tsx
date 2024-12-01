@@ -69,6 +69,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 				email,
 				password,
 			})
+			console.log(response.data)
 			toast('Seja bem vindo de volta', {
 				description: 'Como é bom ter vocé de volta',
 				icon: <CheckCircle size={20} className="text-green-500" />,

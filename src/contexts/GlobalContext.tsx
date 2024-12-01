@@ -1,4 +1,5 @@
 import type { Categories } from '@/types/category'
+import type { Order } from '@/types/order'
 import type { Product } from '@/types/product'
 import type { Table } from '@/types/table'
 import type { User } from '@/types/user'
@@ -19,6 +20,8 @@ type GlobalContextData = {
 	setUsers: Dispatch<SetStateAction<User[]>>
 	tables: Table[]
 	setTables: Dispatch<SetStateAction<Table[]>>
+	realTimeOrders: Order[]
+	setRealTimeOrders: Dispatch<SetStateAction<Order[]>>
 }
 
 type GlobalProviderProps = {
@@ -32,6 +35,7 @@ export function GlobalProvider({ children }: GlobalProviderProps) {
 	const [categories, setCategories] = useState<Categories>([])
 	const [users, setUsers] = useState<User[]>([])
 	const [tables, setTables] = useState<Table[]>([])
+	const [realTimeOrders, setRealTimeOrders] = useState<Order[]>([])
 
 	return (
 		<GlobalContext.Provider
@@ -44,6 +48,8 @@ export function GlobalProvider({ children }: GlobalProviderProps) {
 				setUsers,
 				tables,
 				setTables,
+				realTimeOrders,
+				setRealTimeOrders,
 			}}
 		>
 			{children}
