@@ -47,7 +47,7 @@ import { TooltipProvider } from './ui/tooltip'
 export function Header() {
 	const { user } = useContext(AuthContext)
 	return (
-		<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 dark:bg-zinc-800">
+		<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 bg-zinc-50 dark:bg-zinc-800">
 			<Sheet>
 				<SheetTrigger asChild>
 					<Button size="icon" variant="outline" className="sm:hidden">

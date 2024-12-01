@@ -72,7 +72,7 @@ export const columns: ColumnDef<Category>[] = [
 					variant="ghost"
 					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
-					Name
+					Nome
 					<ChevronsUpDown className="ml-2 h-4 w-4" />
 				</Button>
 			)
@@ -81,7 +81,7 @@ export const columns: ColumnDef<Category>[] = [
 	},
 	{
 		accessorKey: 'id',
-		header: 'Code',
+		header: 'Código',
 		cell: ({ row }) => <div className="capitalize">{row.getValue('id')}</div>,
 	},
 	{

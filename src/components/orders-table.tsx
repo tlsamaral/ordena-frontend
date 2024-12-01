@@ -273,7 +273,7 @@ export function OrdersTable({ orders }: OrdersTableProps) {
 
 	return (
 		<>
-			<div className="w-full">
+			<div className="">
 				<div className="flex items-center justify-between py-4 gap-4">
 					<Input
 						placeholder="Filtrar pedidos por mesa..."
