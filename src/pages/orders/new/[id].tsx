@@ -1,6 +1,7 @@
 import ProductCell from '@/components/product-cell'
 import { SearchCategory } from '@/components/search-category'
 import { SearchProduct } from '@/components/search-product'
+import { TextApp } from '@/components/text-app'
 import { Button } from '@/components/ui/button'
 import {
 	Card,
@@ -18,6 +19,7 @@ import type { Categories, Category } from '@/types/category'
 import type { OrderById, ProductOrder } from '@/types/order'
 import type { Product, ProductList } from '@/types/product'
 import { canSSRAuth } from '@/utils/canSSRAuth'
+import { formatValueToMoney } from '@/utils/formatCurrency'
 import { formatDistance } from '@/utils/formatDistanceToNow'
 import { Send } from 'lucide-react'
 import { notFound } from 'next/navigation'
@@ -89,13 +91,11 @@ export default function NewOrderPage({
 	}
 
 	let productsListed = products
-	console.log(categorySelected)
+
 	if (categorySelected) {
-		console.log(products)
 		productsListed = products.filter(
 			(product) => product.category_id === categorySelected,
 		)
-		console.log(productsListed)
 	}
 
 	return (
@@ -215,6 +215,17 @@ export default function NewOrderPage({
 							<div className="col-span-3">
 								{productsList.length > 0 ? (
 									<div className="flex flex-col gap-2">
+										<div className="w-full flex justify-between pb-2 border-b dark:border-zinc-800 border-zinc-200">
+											<TextApp>{productsList.length} produto(s)</TextApp>
+											<TextApp>
+												{formatValueToMoney(
+													productsList.reduce(
+														(acc, product) => acc + Number(product.price),
+														0,
+													),
+												)}
+											</TextApp>
+										</div>
 										{productsList.map((product) => (
 											<ProductCell
 												product={product}

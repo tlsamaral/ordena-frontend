@@ -73,7 +73,7 @@ export function AddTable() {
 								value={name}
 								onChange={(e) => setName(e.target.value)}
 								className="col-span-3"
-								placeholder="Nome do usuário"
+								placeholder="Nome da mesa"
 								required
 							/>
 						</div>

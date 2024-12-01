@@ -150,7 +150,7 @@ export default function NewOrderBase() {
 					<div>
 						<Label>Mesa</Label>
 						<Select value={orderTable} onValueChange={setOrderTable}>
-							<SelectTrigger className="w-full">
+							<SelectTrigger className="w-full text-zinc-400">
 								<SelectValue placeholder="Selecione a mesa.." />
 							</SelectTrigger>
 							<SelectContent>
