@@ -100,9 +100,11 @@ export const columns: ColumnDef<Product>[] = [
 		),
 	},
 	{
-		accessorKey: 'Preço',
+		accessorKey: 'price',
 		header: () => <div className="text-right">Price</div>,
 		cell: ({ row }) => {
+			const price = row.getValue('price')
+			console.log(price)
 			const amount = Number.parseFloat(row.getValue('price'))
 
 			const formatted = new Intl.NumberFormat('pt-BR', {

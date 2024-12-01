@@ -38,9 +38,8 @@ export function OrderPreview({
 	onNextOrder,
 	onPreviousOrder,
 }: OrderPreviewProps) {
-	console.log(order)
 	const orderTotal =
-		order.items?.reduce((acc, item) => {
+		order.items.reduce((acc, item) => {
 			return acc + item.amount * Number(item.product.price)
 		}, 0) ?? 0
 	return (
