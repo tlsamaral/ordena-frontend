@@ -15,6 +15,7 @@ import { useToast } from '@/hooks/use-toast'
 import { api } from '@/services/apiClient'
 import type { Category } from '@/types/category'
 import type { Product } from '@/types/product'
+import { set } from 'date-fns'
 import { CheckCircle, PlusCircle, Upload } from 'lucide-react'
 import { type ChangeEvent, useContext, useEffect, useState } from 'react'
 import { SearchCategory } from './search-category'
@@ -23,6 +24,7 @@ import { Textarea } from './ui/textarea'
 
 export function AddCategory() {
 	const [name, setName] = useState('')
+	const [open, setOpen] = useState(false)
 
 	const { toast } = useToast()
 	const { setCategories } = useContext(GlobalContext)
@@ -34,7 +36,8 @@ export function AddCategory() {
 		}
 		try {
 			const response = await api.post<Category>('/category', { name })
-			console.log(response)
+			setCategories((prev) => [...prev, response.data])
+			setOpen(false)
 
 			toast({
 				title: 'Categoria cadastrada com sucesso!',
@@ -56,7 +59,7 @@ export function AddCategory() {
 	}
 
 	return (
-		<Dialog>
+		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
 				<Button size="sm" className="h-8 gap-1">
 					<PlusCircle className="h-3.5 w-3.5" />
