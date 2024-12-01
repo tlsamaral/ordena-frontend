@@ -14,15 +14,16 @@ import { useToast } from '@/hooks/use-toast'
 import { api } from '@/services/apiClient'
 import { CheckCircle, PlusCircle } from 'lucide-react'
 import { useState } from 'react'
+import { toast } from 'sonner'
 import { Button } from './ui/button'
 import { Switch } from './ui/switch'
 
 export function AddUser() {
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
+	const [password, setPassword] = useState('')
 	const [isAdmin, setIsAdmin] = useState(false)
-
-	const { toast } = useToast()
+	const [open, setOpen] = useState(false)
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
@@ -31,22 +32,20 @@ export function AddUser() {
 			await api.post('/users', {
 				name,
 				email,
-				password: '123456',
+				password: password,
 				isAdmin,
+				alter_password: true,
+				permission: true,
 			})
-
-			toast({
-				title: 'Usuário cadastrado com sucesso!',
+			setOpen(false)
+			toast('Usuário cadastrado', {
 				description: `O usuário "${name}" foi adicionado.`,
-				action: <ToastAction altText="Desfazer ação">Desfazer</ToastAction>,
 			})
 		} catch (error) {
 			console.error('Erro ao cadastrar o usuário:', error)
-			toast({
-				title: 'Erro ao cadastrar o usuário',
+			toast('Erro ao cadastrar o usuário', {
 				description:
 					'Ocorreu um erro ao tentar cadastrar o usuário. Tente novamente.',
-				variant: 'destructive',
 				action: (
 					<ToastAction altText="Tentar novamente">Tentar novamente</ToastAction>
 				),
@@ -55,7 +54,7 @@ export function AddUser() {
 	}
 
 	return (
-		<Dialog>
+		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
 				<Button size="sm" className="h-8 gap-1">
 					<PlusCircle className="h-3.5 w-3.5" />
@@ -97,6 +96,20 @@ export function AddUser() {
 								className="col-span-3"
 								type="email"
 								placeholder="Email do usuário"
+								required
+							/>
+						</div>
+						<div className="grid grid-cols-4 items-center gap-4">
+							<Label htmlFor="password" className="text-right">
+								Senha
+							</Label>
+							<Input
+								id="password"
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								className="col-span-3"
+								type="password"
+								placeholder="Senha provisória"
 								required
 							/>
 						</div>

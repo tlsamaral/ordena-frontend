@@ -1,4 +1,6 @@
+import { AlterPassword } from '@/components/alter-password'
 import { api } from '@/services/apiClient'
+import type { AuthData } from '@/types/auth'
 import axios, { type AxiosError } from 'axios'
 import { CheckCircle, XCircle } from 'lucide-react'
 import Router from 'next/router'
@@ -8,18 +10,13 @@ import { toast } from 'sonner'
 // import { toast } from 'react-toastify'
 
 type AuthContextData = {
-	user?: UserProps
+	user: UserProps | null
 	isAuthenticated: boolean
 	signIn: (credentials: SignInProps) => Promise<void>
 	signOut: () => void
-	signUp: (credentials: SignUpProps) => Promise<void>
 }
 
-type UserProps = {
-	id: string
-	name: string
-	email: string
-}
+type UserProps = AuthData
 
 type SignInProps = {
 	email: string
@@ -48,21 +45,17 @@ export function signOut() {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-	const [user, setUser] = useState<UserProps>()
+	const [user, setUser] = useState<UserProps | null>(null)
 	const isAuthenticated = !!user
 
 	useEffect(() => {
 		const { '@nextauth.token': token } = parseCookies()
 		if (token) {
 			api
-				.get('/me')
+				.get<UserProps>('/me')
 				.then((response) => {
-					const { id, name, email } = response.data
-					setUser({
-						id,
-						name,
-						email,
-					})
+					const user = response.data
+					setUser(user)
 				})
 				.catch(() => {
 					signOut()
@@ -72,7 +65,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
 	async function signIn({ email, password }: SignInProps) {
 		try {
-			const response = await api.post('/session', {
+			const response = await api.post<AuthData>('/session', {
 				email,
 				password,
 			})
@@ -82,17 +75,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
 				richColors: true,
 				position: 'top-center',
 			})
-			const { id, name, token } = response.data
+			const user = response.data
+			const { token } = user
 			setCookie(undefined, '@nextauth.token', token, {
 				maxAge: 60 * 60 * 24 * 30, // 1 mês
 				path: '/',
 			})
 
-			setUser({
-				id,
-				name,
-				email,
-			})
+			setUser(user)
 			api.defaults.headers.Authorization = `Bearer ${token}`
 			Router.push('/dashboard')
 		} catch (err) {
@@ -109,26 +99,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 		}
 	}
 
-	async function signUp({ name, email, password }: SignUpProps) {
-		try {
-			const response = await api.post('/users', {
-				name,
-				email,
-				password,
-			})
-
-			//   toast.success('Cadastrado com sucesso!')
-			//   Router.push('/')
-		} catch (err) {
-			//   toast.error('Erro as cadastrar')
-			console.log(err)
-		}
-	}
-
 	return (
-		<AuthContext.Provider
-			value={{ user, isAuthenticated, signIn, signOut, signUp }}
-		>
+		<AuthContext.Provider value={{ user, isAuthenticated, signIn, signOut }}>
+			<AlterPassword />
 			{children}
 		</AuthContext.Provider>
 	)
