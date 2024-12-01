@@ -97,7 +97,7 @@ export const columns: ColumnDef<User>[] = [
 	},
 	{
 		accessorKey: 'admin',
-		header: 'Role',
+		header: 'Perfil',
 		cell: ({ row }) => {
 			const payment = row.original
 			const role = payment.admin ? 'Administrador' : 'Usuário'
