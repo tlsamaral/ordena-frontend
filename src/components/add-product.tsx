@@ -272,7 +272,7 @@ export function AddProduct() {
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Write a description"
+              placeholder="Deixe uma breve descrição do produto..."
               required
             />
           </div>
