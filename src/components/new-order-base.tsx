@@ -121,7 +121,7 @@ export default function NewOrderBase() {
 			<DialogTrigger asChild>
 				<Button onClick={handleOpenDialog}>Novo Pedido</Button>
 			</DialogTrigger>
-			<DialogContent className="sm:max-w-[525px]">
+			<DialogContent className="max-w-[350px] sm:max-w-[500px]">
 				<DialogHeader>
 					<DialogTitle>Novo pedido</DialogTitle>
 					<DialogDescription>
