@@ -1,6 +1,6 @@
-import { File, ListFilter } from "lucide-react";
+import { File, ListFilter } from 'lucide-react'
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 import {
 	Card,
 	CardContent,
@@ -8,7 +8,7 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card'
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
@@ -16,28 +16,28 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu'
 
-import { AddProduct } from "@/components/add-product";
-import { AddUser } from "@/components/add-user";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UsersTable } from "@/components/users-table";
-import { api } from "@/services/apiClient";
-import type { Users } from "@/types/user";
-import { canSSRAuth } from "@/utils/canSSRAuth";
-import { useEffect, useState } from "react";
+import { AddProduct } from '@/components/add-product'
+import { AddUser } from '@/components/add-user'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { UsersTable } from '@/components/users-table'
+import { GlobalContext } from '@/contexts/GlobalContext'
+import { api } from '@/services/apiClient'
+import { canSSRAuth } from '@/utils/canSSRAuth'
+import { useContext, useEffect } from 'react'
 
 export default function UsersPage() {
-	const [users, setUsers] = useState<Users>([]);
+	const { users, setUsers } = useContext(GlobalContext)
 
 	useEffect(() => {
 		async function getUsers() {
-			const response = await api.get("/users/all");
-			const { data } = response;
-			setUsers(data);
+			const response = await api.get('/users/all')
+			const { data } = response
+			setUsers(data)
 		}
-		getUsers();
-	}, []);
+		getUsers()
+	}, [setUsers])
 
 	return (
 		<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
@@ -47,31 +47,6 @@ export default function UsersPage() {
 						<TabsTrigger value="users">Users</TabsTrigger>
 					</TabsList>
 					<div className="ml-auto flex items-center gap-2">
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button variant="outline" size="sm" className="h-7 gap-1">
-									<ListFilter className="h-3.5 w-3.5" />
-									<span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-										Filter
-									</span>
-								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent align="end">
-								<DropdownMenuLabel>Filter by</DropdownMenuLabel>
-								<DropdownMenuSeparator />
-								<DropdownMenuCheckboxItem checked>
-									Active
-								</DropdownMenuCheckboxItem>
-								<DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
-								<DropdownMenuCheckboxItem>Archived</DropdownMenuCheckboxItem>
-							</DropdownMenuContent>
-						</DropdownMenu>
-						<Button size="sm" variant="outline" className="h-7 gap-1">
-							<File className="h-3.5 w-3.5" />
-							<span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-								Export
-							</span>
-						</Button>
 						<AddUser />
 					</div>
 				</div>
@@ -95,11 +70,11 @@ export default function UsersPage() {
 				</TabsContent>
 			</Tabs>
 		</main>
-	);
+	)
 }
 
 export const getServerSideProps = canSSRAuth(async (ctx) => {
 	return {
 		props: {},
-	};
-});
+	}
+})
