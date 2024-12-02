@@ -69,9 +69,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 				email,
 				password,
 			})
-			console.log(response.data)
 			toast('Seja bem vindo de volta', {
-				description: 'Como é bom ter vocé de volta',
+				description: `Sempre bom ter você por aqui, ${response.data.name}.`,
 				icon: <CheckCircle size={20} className="text-green-500" />,
 				richColors: true,
 				position: 'top-center',
@@ -85,7 +84,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
 			setUser(user)
 			api.defaults.headers.Authorization = `Bearer ${token}`
-			Router.push('/dashboard')
+
+			if (response.data.admin) {
+				Router.push('/dashboard')
+			} else {
+				Router.push('/orders')
+			}
 		} catch (err) {
 			const errors = err as Error | AxiosError
 			if (axios.isAxiosError(errors) && errors.response) {
