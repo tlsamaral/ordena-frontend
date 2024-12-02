@@ -46,6 +46,15 @@ import { TooltipProvider } from './ui/tooltip'
 
 export function Header() {
 	const { user } = useContext(AuthContext)
+
+	const realNavItems = navItems.filter((item) => {
+		if (user?.admin && item.adminPage) {
+			return item
+		} else if (!user?.admin && !item.adminPage) {
+			return item
+		}
+	})
+
 	return (
 		<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 bg-zinc-50 dark:bg-zinc-800">
 			<Sheet>
@@ -59,13 +68,13 @@ export function Header() {
 					<TooltipProvider>
 						<nav className="grid gap-6 text-lg font-medium">
 							<Link
-								href="/dashboard"
+								href="#"
 								className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full md:h-8 md:w-8 md:text-base bg-orange-300 text-zinc-900 dark:bg-orange-300 dark:text-zinc-900"
 							>
 								<UtensilsCrossed className="h-4 w-4 transition-all group-hover:scale-110" />
 								<span className="sr-only">Acme Inc</span>
 							</Link>
-							{navItems.map((link, i) => (
+							{realNavItems.map((link, i) => (
 								<NavItem
 									key={link.href}
 									href={link.href}
