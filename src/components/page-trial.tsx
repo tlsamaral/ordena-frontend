@@ -9,6 +9,7 @@ import {
 	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import { translatePath } from '@/utils/translate-path'
+import { HomeIcon } from 'lucide-react'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -31,6 +32,12 @@ export function PageTrial() {
 	return (
 		<Breadcrumb className="ml-1 hidden sm:flex">
 			<BreadcrumbList>
+				<BreadcrumbItem>
+					<BreadcrumbLink href="#">
+						<HomeIcon size={18} />
+					</BreadcrumbLink>
+					<BreadcrumbSeparator />
+				</BreadcrumbItem>
 				{pathSegments.map((segment, index) => {
 					const href = `/${pathSegments.slice(0, index + 1).join('/')}`
 					const isLast = index === pathSegments.length - 1
