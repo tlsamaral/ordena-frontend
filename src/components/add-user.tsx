@@ -33,7 +33,7 @@ export function AddUser() {
 				name,
 				email,
 				password: password,
-				isAdmin,
+				admin: isAdmin,
 				alter_password: true,
 				permission: true,
 			})
@@ -120,7 +120,7 @@ export function AddUser() {
 							<Switch
 								id="isAdmin"
 								checked={isAdmin}
-								onCheckedChange={setIsAdmin}
+								onCheckedChange={(change) => setIsAdmin(change)}
 							/>
 						</div>
 					</div>
