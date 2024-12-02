@@ -48,7 +48,7 @@ export function Header() {
 	const { user } = useContext(AuthContext)
 
 	const realNavItems = navItems.filter((item) => {
-		if (user?.admin && item.adminPage) {
+		if (user?.admin) {
 			return item
 		} else if (!user?.admin && !item.adminPage) {
 			return item
