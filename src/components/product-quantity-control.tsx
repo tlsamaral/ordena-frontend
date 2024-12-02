@@ -23,7 +23,7 @@ export default function ProductQuantityControl({
 					onClick={decrementQuantity}
 				>
 					{quantity === 1 ? (
-						<Trash size={7} className="text-white" />
+						<Trash size={7} className="text-red-50" />
 					) : (
 						<MinusIcon size={7} />
 					)}
