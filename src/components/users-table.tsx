@@ -262,7 +262,7 @@ export function UsersTable({ users }: UsersTableProps) {
 
 	return (
 		<div className="w-full">
-			<div className="flex items-center py-4 gap-4 justify-between">
+			<div className="flex items-center py-2 gap-4 justify-between">
 				<Input
 					placeholder="Filtrar por nome..."
 					value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}

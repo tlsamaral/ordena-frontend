@@ -200,16 +200,16 @@ export function ProductsTable({ products }: ProductsTableProps) {
 	return (
 		<div className="w-full max-w-full">
 			<div className="w-full max-w-full overflow-x-auto">
-				<div className="flex items-center py-4 justify-between gap-2">
+				<div className="flex items-center py-2 justify-between gap-2">
 					<Input
 						placeholder="Filtrar por nome..."
 						value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
 						onChange={(event) =>
 							table.getColumn('name')?.setFilterValue(event.target.value)
 						}
-						className="max-w-sm"
+						className="max-w-sm h-8"
 					/>
-					<Button>
+					<Button size="sm">
 						<Link href="/products/new">Novo produto</Link>
 					</Button>
 				</div>

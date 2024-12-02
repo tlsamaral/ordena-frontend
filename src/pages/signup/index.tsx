@@ -142,10 +142,7 @@ export default function SignUp() {
 									{errors.confirmPassword?.message}
 								</p>
 							</div>
-							<Button
-								type="submit"
-								className="w-full dark:bg-orange-500 dark:text-gray-100 dark:hover:bg-orange-400"
-							>
+							<Button type="submit" className="w-full">
 								Solicitar acesso
 							</Button>
 						</form>

@@ -20,6 +20,7 @@ import { api } from '@/services/apiClient'
 import type { OrderResponse } from '@/types/order'
 import type { TableList } from '@/types/table'
 import { formatPhoneNumber } from '@/utils/formaPhoneNumber'
+import { Plus } from 'lucide-react'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -119,7 +120,10 @@ export default function NewOrderBase() {
 			onOpenChange={(open) => (open ? handleOpenDialog() : handleCloseDialog())}
 		>
 			<DialogTrigger asChild>
-				<Button onClick={handleOpenDialog}>Novo Pedido</Button>
+				<Button size="sm" onClick={handleOpenDialog}>
+					<Plus className="mr-1 h-4 w-4" />
+					Novo Pedido
+				</Button>
 			</DialogTrigger>
 			<DialogContent className="max-w-[350px] sm:max-w-[500px]">
 				<DialogHeader>
@@ -166,7 +170,7 @@ export default function NewOrderBase() {
 						</Select>
 					</div>
 					<Button
-						className="h-9 w-full  dark:bg-orange-500 dark:text-gray-100 dark:hover:bg-orange-400"
+						className="h-9 w-full dark:bg-orange-500 dark:text-gray-100 dark:hover:bg-orange-400 bg-orange-600 text-gray-200 hover:bg-orange-500"
 						onClick={handleNewOrder}
 						disabled={isLoading}
 					>

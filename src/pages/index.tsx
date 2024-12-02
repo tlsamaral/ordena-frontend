@@ -43,7 +43,9 @@ export default function Login() {
 			<div className="h-full flex items-center justify-center py-12 bg-gradient-to-l dark:from-zinc-900 dark:to-zinc-950 from-zinc-50 to-zinc-200">
 				<div className="mx-auto grid gap-6">
 					<div className="grid gap-2 text-center">
-						<h1 className="text-3xl font-bold">Acessar</h1>
+						<h1 className="text-3xl font-bold text-muted-foreground">
+							Acessar
+						</h1>
 						<p className="text-balance text-muted-foreground">
 							Acesse digitando seu e-mail e sua senha abaixo
 						</p>
@@ -60,7 +62,7 @@ export default function Login() {
 						</div>
 						<div className="grid gap-2">
 							<div className="flex items-center">
-								<Label htmlFor="password">Password</Label>
+								<Label htmlFor="password">Senha</Label>
 								<Link
 									href="/forgot-password"
 									className="ml-auto inline-block text-sm underline"
@@ -68,12 +70,14 @@ export default function Login() {
 									Esqueceu sua senha?
 								</Link>
 							</div>
-							<Input id="password" type="password" {...register('password')} />
+							<Input
+								id="password"
+								type="password"
+								placeholder="Sua senha.."
+								{...register('password')}
+							/>
 						</div>
-						<Button
-							type="submit"
-							className="w-full dark:bg-orange-500 dark:text-gray-100 dark:hover:bg-orange-400"
-						>
+						<Button type="submit" className="w-full">
 							Login
 						</Button>
 					</form>

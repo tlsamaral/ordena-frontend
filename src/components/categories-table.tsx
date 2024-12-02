@@ -170,14 +170,14 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
 
 	return (
 		<div className="w-full">
-			<div className="flex items-center py-4 justify-between gap-2">
+			<div className="flex items-center py-2 justify-between gap-2">
 				<Input
 					placeholder="Filtrar por categorias..."
 					value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
 					onChange={(event) =>
 						table.getColumn('name')?.setFilterValue(event.target.value)
 					}
-					className="max-w-sm"
+					className="max-w-sm h-8"
 				/>
 				<AddCategory />
 			</div>

@@ -300,14 +300,14 @@ export function OrdersTable({ orders }: OrdersTableProps) {
 	return (
 		<div className="w-full max-w-full">
 			<div className="w-full max-w-full overflow-x-auto">
-				<div className="flex items-center justify-between py-4 gap-4">
+				<div className="flex items-center justify-between py-2 gap-4">
 					<Input
 						placeholder="Filtrar pedidos por mesa..."
 						value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
 						onChange={(event) =>
 							table.getColumn('name')?.setFilterValue(event.target.value)
 						}
-						className="max-w-sm"
+						className="max-w-sm h-8"
 					/>
 					<NewOrderBase />
 				</div>
