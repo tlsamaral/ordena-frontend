@@ -35,7 +35,13 @@ import {
 import { GlobalContext } from '@/contexts/GlobalContext'
 import { api } from '@/services/apiClient'
 import type { User, Users } from '@/types/user'
-import { ChevronDown, ChevronsUpDown, EllipsisVertical, X } from 'lucide-react'
+import {
+	CheckCircle,
+	ChevronDown,
+	ChevronsUpDown,
+	EllipsisVertical,
+	X,
+} from 'lucide-react'
 import { toast } from 'sonner'
 import { AddUser } from './add-user'
 import { Badge } from './ui/badge'
@@ -189,11 +195,35 @@ export const columns: ColumnDef<User>[] = [
 					setUsers((prev) => prev.filter((u) => u.id !== user.id))
 				} catch (err) {
 					console.error(err)
-					toast('', {
+					toast('Ocorreu um erro', {
 						icon: <X size={14} />,
 						className:
 							'destructive group border-destructive bg-destructive text-destructive-foreground',
-						description: 'Ocorreu um erro ao deletar este produto.',
+						description: 'Ocorreu um erro ao deletar este usuário.',
+					})
+				}
+			}
+
+			function toggleUserRole() {
+				try {
+					api.put('/user/alter/role', {
+						user_id: user.id,
+					})
+					setUsers((prev) =>
+						prev.map((u) => (u.id === user.id ? { ...u, admin: !u.admin } : u)),
+					)
+					toast('Perfil Alterado', {
+						icon: <CheckCircle className="text-green-500" size={14} />,
+						className:
+							'destructive group border-destructive bg-destructive text-destructive-foreground',
+						description: 'Agora o perfil do usuário foi alterado.',
+					})
+				} catch (error) {
+					toast('Ocorreu um erro', {
+						icon: <X size={14} />,
+						className:
+							'destructive group border-destructive bg-destructive text-destructive-foreground',
+						description: 'Ocorreu um erro ao alterar o perfil.',
 					})
 				}
 			}
@@ -210,6 +240,10 @@ export const columns: ColumnDef<User>[] = [
 						<DropdownMenuLabel>Ações</DropdownMenuLabel>
 						<DropdownMenuItem onClick={handleUserPermission}>
 							{user.permission ? 'Remover permissão' : 'Atribuir permissão'}
+						</DropdownMenuItem>
+						<DropdownMenuSeparator />
+						<DropdownMenuItem onClick={toggleUserRole}>
+							{user.admin ? 'Alterar para usuário' : 'Alterar para admin'}
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem>
