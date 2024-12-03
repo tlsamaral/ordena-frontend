@@ -81,7 +81,7 @@ export default function Login() {
 							Login
 						</Button>
 					</form>
-					<div className="mt-4 text-center text-sm">
+					<div className="mt-4 text-center text-sm text-muted-foreground">
 						Não tem uma conta?{' '}
 						<Link href="/signup" className="underline">
 							Solicite acesso

@@ -88,7 +88,9 @@ export default function SignUp() {
 				) : (
 					<div className="mx-auto grid gap-6">
 						<div className="grid gap-2">
-							<h1 className="text-3xl font-bold">Solicitar acesso</h1>
+							<h1 className="text-3xl font-bold text-muted-foreground">
+								Solicitar acesso
+							</h1>
 							<p className="text-muted-foreground">
 								Preencha seus dados abaixo e solicite o seu acesso
 							</p>
@@ -146,7 +148,7 @@ export default function SignUp() {
 								Solicitar acesso
 							</Button>
 						</form>
-						<div className="mt-4 text-center text-sm">
+						<div className="mt-4 text-center text-sm text-muted-foreground">
 							Já tem uma conta?{' '}
 							<Link href="/" className="underline">
 								Realizar acesso
