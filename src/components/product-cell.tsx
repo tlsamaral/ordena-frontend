@@ -54,7 +54,7 @@ export default function ProductCell({
 	return (
 		<div className="flex flex-row items-center justify-between gap-2">
 			<section className="flex flex-row items-center gap-2">
-				<div className="h-9 w-9 sm:h-12 sm:w-12 rounded-full border overflow-hidden">
+				<div className="h-12 w-12 rounded-full border overflow-hidden">
 					<img
 						src={
 							products.find((p) => p.id === product.id)?.banner ||
