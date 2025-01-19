@@ -30,6 +30,7 @@ import { SearchCategory } from './search-category'
 import { Button } from './ui/button'
 import { Separator } from './ui/separator'
 import { Textarea } from './ui/textarea'
+import axios from 'axios'
 
 export function AddProduct() {
 	const [name, setName] = useState('')
@@ -89,7 +90,7 @@ export function AddProduct() {
 		formData.append('file', imageBanner)
 
 		try {
-			setIsLoading(true)
+			// setIsLoading(true)
 			const response = await api.post<Product>('/product', formData)
 			setProducts((prev) => [...prev, { ...response.data }])
 
@@ -292,7 +293,7 @@ export function AddProduct() {
 				>
 					<Link href="/products">Cancelar</Link>
 				</Button>
-				<Button type="submit" size="sm" disabled={isLoading}>
+				<Button type="submit" size="sm" >
 					Salvar <CheckCircle size={16} className="text-sm ml-1" />
 				</Button>
 			</div>
