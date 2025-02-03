@@ -90,7 +90,7 @@ export function AddProduct() {
 		formData.append('file', imageBanner)
 
 		try {
-			// setIsLoading(true)
+			setIsLoading(true)
 			const response = await api.post<Product>('/product', formData)
 			setProducts((prev) => [...prev, { ...response.data }])
 
@@ -224,7 +224,6 @@ export function AddProduct() {
 									type="file"
 									className="hidden"
 									onChange={handleFile}
-									required
 									accept="image/png, image/jpeg, image/svg, image/webp, image/gif"
 								/>
 								<span className="p-3 rounded-full dark:bg-zinc-900 bg-zinc-200 border">
