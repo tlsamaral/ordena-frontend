@@ -8,7 +8,7 @@ let socket: Socket
 
 export const initializeSocket = (): Socket => {
 	const userId = getUserIdFromToken()
-	const socket = io('https://snapfood-backend.onrender.com', {
+	const socket = io('https://ordena-backend.onrender.com', {
 		auth: { userId: userId },
 	})
 
